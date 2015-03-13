@@ -55,45 +55,31 @@ static NSString * const HYPScatterPlotXLineColor = @"EC3031";
 {
     if ([self.dataSource respondsToSelector:@selector(maximumYLabel:)]) {
         HYPScatterLabel *maximumYLabel = [self.dataSource maximumYLabel:self];
-        UIFont *font = [self getAdjustedFont:maximumYLabel rect:rect];
+        UIFont *font = [maximumYLabel adjustedFontInRect:rect];
         CGPoint point = CGPointMake(0, CGRectGetMaxY(rect) - font.lineHeight);
         [self drawTextFor:context rect:rect label:maximumYLabel font:font alignment:NSTextAlignmentCenter point:point];
     }
 
     if ([self.dataSource respondsToSelector:@selector(minimumYLabel:)]) {
         HYPScatterLabel *minimumYLabel = [self.dataSource minimumYLabel:self];
-        UIFont *font = [self getAdjustedFont:minimumYLabel rect:rect];
+        UIFont *font = [minimumYLabel adjustedFontInRect:rect];
         CGPoint point = CGPointMake(0, CGRectGetMinY(rect));
         [self drawTextFor:context rect:rect label:minimumYLabel font:font alignment:NSTextAlignmentCenter point:point];
     }
 
     if ([self.dataSource respondsToSelector:@selector(minimumXLabel:)]) {
         HYPScatterLabel *minimumXLabel = [self.dataSource minimumXLabel:self];
-        UIFont *font = [self getAdjustedFont:minimumXLabel rect:rect];
+        UIFont *font = [minimumXLabel adjustedFontInRect:rect];
         CGPoint point = CGPointMake(CGRectGetMinX(rect) + HYPScatterPlotPadding, CGRectGetMinY(rect));
         [self drawTextFor:context rect:rect label:minimumXLabel font:font alignment:NSTextAlignmentLeft point:point];
     }
 
     if ([self.dataSource respondsToSelector:@selector(maximumXLabel:)]) {
         HYPScatterLabel *maximumXLabel = [self.dataSource maximumXLabel:self];
-        UIFont *font = [self getAdjustedFont:maximumXLabel rect:rect];
+        UIFont *font = [maximumXLabel adjustedFontInRect:rect];
         CGPoint point = CGPointMake(CGRectGetMaxX(rect) - CGRectGetMinX(rect) - HYPScatterPlotPadding, CGRectGetMinY(rect));
         [self drawTextFor:context rect:rect label:maximumXLabel font:font alignment:NSTextAlignmentRight point:point];
     }
-}
-
-//determines the correct font size based on whether auto_size_text is YES or NO
-- (UIFont *)getAdjustedFont:(HYPScatterLabel *)label rect:(CGRect)rect
-{
-    //we use 6% of the drawing area width as size of font if auto_size_text option is YES
-    CGFloat scaledFontSize = (0.05) * CGRectGetWidth(rect);
-    UIFont *font = label.font;
-
-    if (label.autoSizeText) {
-        font = [UIFont fontWithName:label.font.fontName size:scaledFontSize];
-    }
-
-    return font;
 }
 
 //for drawing text at different points in the drawing area using core text api
@@ -242,7 +228,7 @@ static NSString * const HYPScatterPlotXLineColor = @"EC3031";
         CGContextSetLineDash(context, 0, NULL, 0);  //remove the dash
 
         HYPScatterLabel* averageLabel = [self.dataSource averageLabel:self];
-        UIFont *font = [self getAdjustedFont:averageLabel rect:rect];
+        UIFont *font = [averageLabel adjustedFontInRect:rect];
         CGPoint point = CGPointMake(0, averageLine);
         [self drawTextFor:context rect:rect label:averageLabel font:font alignment:NSTextAlignmentCenter point:point];
     }

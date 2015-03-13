@@ -10,4 +10,6 @@
 
 - (instancetype)initWithText:(NSString *)text textColor:(UIColor *)textColor font:(UIFont *)font autoSizeText:(BOOL)autoSizeText;
 
+- (UIFont *)adjustedFontInRect:(CGRect)rect;
+
 @end
