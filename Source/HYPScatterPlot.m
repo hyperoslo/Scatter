@@ -5,6 +5,7 @@
 
 #import "HYPScatterPoint.h"
 #import "HYPScatterLabel.h"
+
 #import "UIColor+Hex.h"
 
 static CGFloat graphWidth = 0.0f;
@@ -13,13 +14,11 @@ static CGFloat graphHeight = 0.0f;
 static CGFloat kCircleRadius = 7.0f;
 static CGFloat kPadding = 10.0f;
 
-static NSString* bgColor = @"0E223D";
-static NSString* xLineColor = @"EC3031";
+static NSString * bgColor = @"0E223D";
+static NSString * xLineColor = @"EC3031";
 
 @interface HYPScatterPlot()
-{
-    
-}
+
 @end
 
 @implementation HYPScatterPlot
@@ -27,10 +26,8 @@ static NSString* xLineColor = @"EC3031";
 - (instancetype)initWithFrame:(CGRect)frame
 {
     self = [super initWithFrame:frame];
-
     if (!self) return nil;
     
-    //set default color values if not provided by user
     if (self.backgroundColor == nil) self.backgroundColor = [UIColor colorFromHex:bgColor];
     if (self.xAxisColor == nil) self.xAxisColor = [UIColor colorFromHex:xLineColor];
     if (self.avgLineColor == nil) self.avgLineColor = [UIColor whiteColor];
@@ -40,39 +37,31 @@ static NSString* xLineColor = @"EC3031";
     return self;
 }
 
-
 - (void)drawLabels:(CGContextRef)context rect:(CGRect)rect
 {
-    if ([self.delegate respondsToSelector:@selector(maximumYLabel:)])
-    {
-        HYPScatterLabel* maxYLabel = [self.delegate maximumYLabel:self];
+    if ([self.delegate respondsToSelector:@selector(maximumYLabel:)]) {
+        HYPScatterLabel *maxYLabel = [self.delegate maximumYLabel:self];
         UIFont *font = [self getAdjustedFont:maxYLabel rect:rect];
         CGPoint point = CGPointMake(0, CGRectGetMaxY(rect) - font.lineHeight);
         [self drawTextFor:context rect:rect label:maxYLabel font:font alignment:NSTextAlignmentCenter point:point];
     }
     
-    if ([self.delegate respondsToSelector:@selector(minimumYLabel:)])
-    {
-        HYPScatterLabel* minYLabel = [self.delegate minimumYLabel:self];
-        
+    if ([self.delegate respondsToSelector:@selector(minimumYLabel:)]) {
+        HYPScatterLabel *minYLabel = [self.delegate minimumYLabel:self];
         UIFont *font = [self getAdjustedFont:minYLabel rect:rect];
         CGPoint point = CGPointMake(0, CGRectGetMinY(rect));
         [self drawTextFor:context rect:rect label:minYLabel font:font alignment:NSTextAlignmentCenter point:point];
     }
     
-    if ([self.delegate respondsToSelector:@selector(minimumXLabel:)])
-    {
-        HYPScatterLabel* minXLabel = [self.delegate minimumXLabel:self];
-        
+    if ([self.delegate respondsToSelector:@selector(minimumXLabel:)]) {
+        HYPScatterLabel *minXLabel = [self.delegate minimumXLabel:self];
         UIFont *font = [self getAdjustedFont:minXLabel rect:rect];
         CGPoint point = CGPointMake(CGRectGetMinX(rect) + kPadding, CGRectGetMinY(rect));
         [self drawTextFor:context rect:rect label:minXLabel font:font alignment:NSTextAlignmentLeft point:point];
     }
     
-    if ([self.delegate respondsToSelector:@selector(maximumXLabel:)])
-    {
-        HYPScatterLabel* maxXLabel = [self.delegate maximumXLabel:self];
-        
+    if ([self.delegate respondsToSelector:@selector(maximumXLabel:)]) {
+        HYPScatterLabel *maxXLabel = [self.delegate maximumXLabel:self];
         UIFont *font = [self getAdjustedFont:maxXLabel rect:rect];
         CGPoint point = CGPointMake(CGRectGetMaxX(rect) - CGRectGetMinX(rect) - kPadding, CGRectGetMinY(rect));
         [self drawTextFor:context rect:rect label:maxXLabel font:font alignment:NSTextAlignmentRight point:point];
@@ -80,25 +69,24 @@ static NSString* xLineColor = @"EC3031";
 }
 
 //determines the correct font size based on whether auto_size_text is YES or NO
-- (UIFont *)getAdjustedFont:(HYPScatterLabel*)label rect:(CGRect)rect
+- (UIFont *)getAdjustedFont:(HYPScatterLabel *)label rect:(CGRect)rect
 {
     //we use 6% of the drawing area width as size of font if auto_size_text option is YES
     CGFloat scaledFontSize = (0.05) * CGRectGetWidth(rect);
     UIFont *font = label.font;
     
-    if (label.autoSizeText == YES)
-    {
+    if (label.autoSizeText == YES) {
         font = [UIFont fontWithName:label.font.fontName size:scaledFontSize];
     }
+
     return font;
 }
 
 //for drawing text at different points in the drawing area using core text api
-- (void)drawTextFor:(CGContextRef)context rect:(CGRect)rect label:(HYPScatterLabel*)label font:(UIFont*)font alignment:(NSTextAlignment)alignment point:(CGPoint)point
+- (void)drawTextFor:(CGContextRef)context rect:(CGRect)rect label:(HYPScatterLabel *)label font:(UIFont *)font alignment:(NSTextAlignment)alignment point:(CGPoint)point
 {
     //  Note: we can't get a perfect bounding box for the text as the methods that are suppose to do it are buggy:
     //  http://stackoverflow.com/a/7014352/550393
-    
     CTFontRef fontRef = CTFontCreateWithName((CFStringRef)font.fontName, font.pointSize, NULL);
     NSDictionary *attrDictionary = [NSDictionary dictionaryWithObjectsAndKeys:
                                     CFBridgingRelease(fontRef), (NSString*)kCTFontAttributeName,
@@ -221,8 +209,7 @@ static NSString* xLineColor = @"EC3031";
     CGContextStrokePath(context);
     
     //draw a horizontal line on average value of y
-    if ([self.delegate respondsToSelector:@selector(avgYValue:)])
-    {
+    if ([self.delegate respondsToSelector:@selector(avgYValue:)]) {
         CGFloat avgVertical = [self.delegate avgYValue:self];
         
         CGContextSetLineWidth(context, 2);
@@ -245,8 +232,7 @@ static NSString* xLineColor = @"EC3031";
     }
     
     
-    for (int pointNo=0; pointNo < scatterPoints.count; pointNo++)
-    {
+    for (int pointNo=0; pointNo < scatterPoints.count; pointNo++) {
         //  normalization is done by dividing a value by maximum value in the list
         //  for each point get their normalized co-ordinates with respect to the height and width of the drawing space
         HYPScatterPoint *point = scatterPoints[pointNo];
