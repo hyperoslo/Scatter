@@ -152,7 +152,7 @@ static NSString * const HYPScatterPlotXLineColor = @"EC3031";
 
 - (void)drawPoints:(CGContextRef)context rect:(CGRect)rect
 {
-    NSArray *scatterPoints = [self.dataSource scatterPointsForScatterPlot:self];
+    NSArray *scatterPoints = [self.dataSource pointsForScatterPlot:self];
 
     HYPScatterPoint *maximumHorizontalPoint = [self.dataSource maximumXValue:self];
     HYPScatterPoint *minimumHorizontalPoint = [self.dataSource minimumXValue:self];
@@ -215,10 +215,12 @@ static NSString * const HYPScatterPlotXLineColor = @"EC3031";
         CGContextStrokePath(context);
         CGContextSetLineDash(context, 0, NULL, 0);  //remove the dash
 
-        HYPScatterLabel *averageLabel = [self.dataSource averageLabel:self];
-        UIFont *font = [averageLabel adjustedFontInRect:rect];
-        CGPoint point = CGPointMake(0, averageLine);
-        [self drawTextInContext:context rect:rect label:averageLabel font:font alignment:NSTextAlignmentCenter point:point];
+        if ([self.dataSource respondsToSelector:@selector(averageLabel:)]) {
+            HYPScatterLabel *averageLabel = [self.dataSource averageLabel:self];
+            UIFont *font = [averageLabel adjustedFontInRect:rect];
+            CGPoint point = CGPointMake(0, averageLine);
+            [self drawTextInContext:context rect:rect label:averageLabel font:font alignment:NSTextAlignmentCenter point:point];
+        }
     }
 
 
