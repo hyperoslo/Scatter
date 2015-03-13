@@ -7,12 +7,13 @@
 
 @interface HYPScatterPlot : UIView
 
+@property (nonatomic, weak) id<HYPScatterPlotDataSource> dataSource;
+
+//  optional properties
 @property (nonatomic) UIColor *averageLineColor;
 @property (nonatomic) UIColor *xAxisColor;
 @property (nonatomic) UIColor *yAxisMidGradient;
 @property (nonatomic) UIColor *yAxisEndGradient;
-
-@property (nonatomic, weak) id<HYPScatterPlotDataSource> dataSource;
 
 @end
 
@@ -24,7 +25,7 @@
  
  @return should be a list of HYPScatterPoint objects
  */
-- (NSArray *)scatterPointsForScatterPlot:(HYPScatterPlot *)scatterPlot;
+- (NSArray *)pointsForScatterPlot:(HYPScatterPlot *)scatterPlot;
 - (HYPScatterPoint *)maximumXValue:(HYPScatterPlot *)scatterPlot;
 - (HYPScatterPoint *)minimumXValue:(HYPScatterPlot *)scatterPlot;
 - (HYPScatterPoint *)maximumYValue:(HYPScatterPlot *)scatterPlot;

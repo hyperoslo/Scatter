@@ -152,7 +152,7 @@ static NSString * const HYPScatterPlotXLineColor = @"EC3031";
 
 - (void)drawPoints:(CGContextRef)context rect:(CGRect)rect
 {
-    NSArray *scatterPoints = [self.dataSource scatterPointsForScatterPlot:self];
+    NSArray *scatterPoints = [self.dataSource pointsForScatterPlot:self];
 
     HYPScatterPoint *maximumHorizontalPoint = [self.dataSource maximumXValue:self];
     HYPScatterPoint *minimumHorizontalPoint = [self.dataSource minimumXValue:self];
