@@ -17,17 +17,17 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-    
+
     [self.uiView addSubview:self.scatterPlot];
-    
+
     UIColor *fillColor1 = [UIColor redColor];
     UIColor *fillColor2 = [UIColor yellowColor];
     UIColor *fillColor3 = [UIColor lightGrayColor];
-    
+
     UIColor *strokeColor1 = [UIColor whiteColor];
     UIColor *strokeColor2 = [UIColor yellowColor];
     UIColor *strokeColor3 = [UIColor whiteColor];
-    
+
     self.scatterPoints = [NSArray arrayWithObjects:
                           [[HYPScatterPoint alloc] initWithValues:fillColor1 strokeColor:strokeColor1 x:0.0f y:0.0f],
                           [[HYPScatterPoint alloc] initWithValues:fillColor2 strokeColor:strokeColor2 x:100.0f y:20.0f],
@@ -42,7 +42,7 @@
 - (void)viewDidLayoutSubviews
 {
     [super viewDidLayoutSubviews];
-    
+
     _scatterPlot.frame = self.uiView.bounds;
     [_scatterPlot setNeedsDisplay];
 }
@@ -50,13 +50,10 @@
 - (HYPScatterPlot *)scatterPlot
 {
     if (_scatterPlot) return _scatterPlot;
-    
+
     _scatterPlot = [[HYPScatterPlot alloc] initWithFrame:self.view.bounds];
     _scatterPlot.delegate = self;
-//    _scatterPlot.backgroundColor = [UIColor grayColor];
-//    _scatterPlot.avgLineColor = [UIColor blueColor];
-//    _scatterPlot.xAxisColor = [UIColor yellowColor];
-    
+
     return _scatterPlot;
 }
 
@@ -70,11 +67,11 @@
 - (HYPScatterPoint *)maximumXValue:(HYPScatterPlot *)scatterPlot
 {
     __block HYPScatterPoint* maximumX = self.scatterPoints[0];
-    
+
     [self.scatterPoints enumerateObjectsUsingBlock:^(HYPScatterPoint *obj, NSUInteger idx, BOOL *stop) {
         if (obj.x > maximumX.x) maximumX = obj;
     }];
-    
+
     return maximumX;
 }
 
@@ -84,18 +81,18 @@
     [self.scatterPoints enumerateObjectsUsingBlock:^(HYPScatterPoint *obj, NSUInteger idx, BOOL *stop) {
         if (obj.x < minimumX.x) minimumX = obj;
     }];
-    
+
     return minimumX;
 }
 
 - (HYPScatterPoint *)maximumYValue:(HYPScatterPlot *)scatterPlot
 {
     __block HYPScatterPoint* maximumY = self.scatterPoints[0];
-    
+
     [self.scatterPoints enumerateObjectsUsingBlock:^(HYPScatterPoint *obj, NSUInteger idx, BOOL *stop) {
         if (obj.y > maximumY.y) maximumY = obj;
     }];
-    
+
     return maximumY;
 }
 
@@ -105,7 +102,7 @@
     [self.scatterPoints enumerateObjectsUsingBlock:^(HYPScatterPoint *obj, NSUInteger idx, BOOL *stop) {
         if (obj.y < minimumY.y) minimumY = obj;
     }];
-    
+
     return minimumY;
 }
 
@@ -117,9 +114,9 @@
         sum += obj.y;
         ++count;
     }];
-    
+
     if (count == 0) return 0;
-    
+
     return sum/count;
 }
 

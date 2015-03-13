@@ -12,20 +12,9 @@
 		3C1B1F241AB2657A009B129D /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 3C1B1F221AB2657A009B129D /* Main.storyboard */; };
 		3C1B1F261AB2657A009B129D /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 3C1B1F251AB2657A009B129D /* Images.xcassets */; };
 		3C1B1F291AB2657A009B129D /* LaunchScreen.xib in Resources */ = {isa = PBXBuildFile; fileRef = 3C1B1F271AB2657A009B129D /* LaunchScreen.xib */; };
-		3C1B1F351AB2657A009B129D /* HelloScatterTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 3C1B1F341AB2657A009B129D /* HelloScatterTests.m */; };
 		3C1B1F401AB2682D009B129D /* DemoViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 3C1B1F3F1AB2682D009B129D /* DemoViewController.m */; };
 		CEE05A21DA0017651221B4D8 /* libPods.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 4D53F4CC71CB9BE58726C2B6 /* libPods.a */; };
 /* End PBXBuildFile section */
-
-/* Begin PBXContainerItemProxy section */
-		3C1B1F2F1AB2657A009B129D /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = 3C1B1F0D1AB2657A009B129D /* Project object */;
-			proxyType = 1;
-			remoteGlobalIDString = 3C1B1F141AB2657A009B129D;
-			remoteInfo = HelloScatter;
-		};
-/* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
 		1B14BEE42C7E1E1787EA022D /* Pods.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.release.xcconfig; path = "Pods/Target Support Files/Pods/Pods.release.xcconfig"; sourceTree = "<group>"; };
@@ -37,9 +26,6 @@
 		3C1B1F231AB2657A009B129D /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		3C1B1F251AB2657A009B129D /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Images.xcassets; sourceTree = "<group>"; };
 		3C1B1F281AB2657A009B129D /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = Base; path = Base.lproj/LaunchScreen.xib; sourceTree = "<group>"; };
-		3C1B1F2E1AB2657A009B129D /* HelloScatterTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = HelloScatterTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
-		3C1B1F331AB2657A009B129D /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		3C1B1F341AB2657A009B129D /* HelloScatterTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = HelloScatterTests.m; sourceTree = "<group>"; };
 		3C1B1F3E1AB2682D009B129D /* DemoViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DemoViewController.h; sourceTree = "<group>"; };
 		3C1B1F3F1AB2682D009B129D /* DemoViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DemoViewController.m; sourceTree = "<group>"; };
 		4D53F4CC71CB9BE58726C2B6 /* libPods.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libPods.a; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -55,13 +41,6 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
-		3C1B1F2B1AB2657A009B129D /* Frameworks */ = {
-			isa = PBXFrameworksBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
@@ -69,7 +48,6 @@
 			isa = PBXGroup;
 			children = (
 				3C1B1F171AB2657A009B129D /* HelloScatter */,
-				3C1B1F311AB2657A009B129D /* HelloScatterTests */,
 				3C1B1F161AB2657A009B129D /* Products */,
 				CD58857E3EB44BDEB73E8382 /* Pods */,
 				67B76404FCE7758E393ECDB0 /* Frameworks */,
@@ -80,7 +58,6 @@
 			isa = PBXGroup;
 			children = (
 				3C1B1F151AB2657A009B129D /* HelloScatter.app */,
-				3C1B1F2E1AB2657A009B129D /* HelloScatterTests.xctest */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -105,23 +82,6 @@
 			children = (
 				3C1B1F191AB2657A009B129D /* Info.plist */,
 				3C1B1F1A1AB2657A009B129D /* main.m */,
-			);
-			name = "Supporting Files";
-			sourceTree = "<group>";
-		};
-		3C1B1F311AB2657A009B129D /* HelloScatterTests */ = {
-			isa = PBXGroup;
-			children = (
-				3C1B1F341AB2657A009B129D /* HelloScatterTests.m */,
-				3C1B1F321AB2657A009B129D /* Supporting Files */,
-			);
-			path = HelloScatterTests;
-			sourceTree = "<group>";
-		};
-		3C1B1F321AB2657A009B129D /* Supporting Files */ = {
-			isa = PBXGroup;
-			children = (
-				3C1B1F331AB2657A009B129D /* Info.plist */,
 			);
 			name = "Supporting Files";
 			sourceTree = "<group>";
@@ -165,24 +125,6 @@
 			productReference = 3C1B1F151AB2657A009B129D /* HelloScatter.app */;
 			productType = "com.apple.product-type.application";
 		};
-		3C1B1F2D1AB2657A009B129D /* HelloScatterTests */ = {
-			isa = PBXNativeTarget;
-			buildConfigurationList = 3C1B1F3B1AB2657A009B129D /* Build configuration list for PBXNativeTarget "HelloScatterTests" */;
-			buildPhases = (
-				3C1B1F2A1AB2657A009B129D /* Sources */,
-				3C1B1F2B1AB2657A009B129D /* Frameworks */,
-				3C1B1F2C1AB2657A009B129D /* Resources */,
-			);
-			buildRules = (
-			);
-			dependencies = (
-				3C1B1F301AB2657A009B129D /* PBXTargetDependency */,
-			);
-			name = HelloScatterTests;
-			productName = HelloScatterTests;
-			productReference = 3C1B1F2E1AB2657A009B129D /* HelloScatterTests.xctest */;
-			productType = "com.apple.product-type.bundle.unit-test";
-		};
 /* End PBXNativeTarget section */
 
 /* Begin PBXProject section */
@@ -194,10 +136,6 @@
 				TargetAttributes = {
 					3C1B1F141AB2657A009B129D = {
 						CreatedOnToolsVersion = 6.1.1;
-					};
-					3C1B1F2D1AB2657A009B129D = {
-						CreatedOnToolsVersion = 6.1.1;
-						TestTargetID = 3C1B1F141AB2657A009B129D;
 					};
 				};
 			};
@@ -215,7 +153,6 @@
 			projectRoot = "";
 			targets = (
 				3C1B1F141AB2657A009B129D /* HelloScatter */,
-				3C1B1F2D1AB2657A009B129D /* HelloScatterTests */,
 			);
 		};
 /* End PBXProject section */
@@ -228,13 +165,6 @@
 				3C1B1F241AB2657A009B129D /* Main.storyboard in Resources */,
 				3C1B1F291AB2657A009B129D /* LaunchScreen.xib in Resources */,
 				3C1B1F261AB2657A009B129D /* Images.xcassets in Resources */,
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
-		3C1B1F2C1AB2657A009B129D /* Resources */ = {
-			isa = PBXResourcesBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -284,23 +214,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
-		3C1B1F2A1AB2657A009B129D /* Sources */ = {
-			isa = PBXSourcesBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-				3C1B1F351AB2657A009B129D /* HelloScatterTests.m in Sources */,
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
 /* End PBXSourcesBuildPhase section */
-
-/* Begin PBXTargetDependency section */
-		3C1B1F301AB2657A009B129D /* PBXTargetDependency */ = {
-			isa = PBXTargetDependency;
-			target = 3C1B1F141AB2657A009B129D /* HelloScatter */;
-			targetProxy = 3C1B1F2F1AB2657A009B129D /* PBXContainerItemProxy */;
-		};
-/* End PBXTargetDependency section */
 
 /* Begin PBXVariantGroup section */
 		3C1B1F221AB2657A009B129D /* Main.storyboard */ = {
@@ -422,40 +336,6 @@
 			};
 			name = Release;
 		};
-		3C1B1F3C1AB2657A009B129D /* Debug */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				BUNDLE_LOADER = "$(TEST_HOST)";
-				FRAMEWORK_SEARCH_PATHS = (
-					"$(SDKROOT)/Developer/Library/Frameworks",
-					"$(inherited)",
-				);
-				GCC_PREPROCESSOR_DEFINITIONS = (
-					"DEBUG=1",
-					"$(inherited)",
-				);
-				INFOPLIST_FILE = HelloScatterTests/Info.plist;
-				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
-				PRODUCT_NAME = "$(TARGET_NAME)";
-				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/HelloScatter.app/HelloScatter";
-			};
-			name = Debug;
-		};
-		3C1B1F3D1AB2657A009B129D /* Release */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				BUNDLE_LOADER = "$(TEST_HOST)";
-				FRAMEWORK_SEARCH_PATHS = (
-					"$(SDKROOT)/Developer/Library/Frameworks",
-					"$(inherited)",
-				);
-				INFOPLIST_FILE = HelloScatterTests/Info.plist;
-				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
-				PRODUCT_NAME = "$(TARGET_NAME)";
-				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/HelloScatter.app/HelloScatter";
-			};
-			name = Release;
-		};
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
@@ -473,15 +353,6 @@
 			buildConfigurations = (
 				3C1B1F391AB2657A009B129D /* Debug */,
 				3C1B1F3A1AB2657A009B129D /* Release */,
-			);
-			defaultConfigurationIsVisible = 0;
-			defaultConfigurationName = Release;
-		};
-		3C1B1F3B1AB2657A009B129D /* Build configuration list for PBXNativeTarget "HelloScatterTests" */ = {
-			isa = XCConfigurationList;
-			buildConfigurations = (
-				3C1B1F3C1AB2657A009B129D /* Debug */,
-				3C1B1F3D1AB2657A009B129D /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
