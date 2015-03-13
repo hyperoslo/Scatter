@@ -57,74 +57,65 @@ static NSString * const HYPScatterPlotXLineColor = @"EC3031";
         HYPScatterLabel *maximumYLabel = [self.dataSource maximumYLabel:self];
         UIFont *font = [maximumYLabel adjustedFontInRect:rect];
         CGPoint point = CGPointMake(0, CGRectGetMaxY(rect) - font.lineHeight);
-        [self drawTextFor:context rect:rect label:maximumYLabel font:font alignment:NSTextAlignmentCenter point:point];
+        [self drawTextInContext:context rect:rect label:maximumYLabel font:font alignment:NSTextAlignmentCenter point:point];
     }
 
     if ([self.dataSource respondsToSelector:@selector(minimumYLabel:)]) {
         HYPScatterLabel *minimumYLabel = [self.dataSource minimumYLabel:self];
         UIFont *font = [minimumYLabel adjustedFontInRect:rect];
         CGPoint point = CGPointMake(0, CGRectGetMinY(rect));
-        [self drawTextFor:context rect:rect label:minimumYLabel font:font alignment:NSTextAlignmentCenter point:point];
+        [self drawTextInContext:context rect:rect label:minimumYLabel font:font alignment:NSTextAlignmentCenter point:point];
     }
 
     if ([self.dataSource respondsToSelector:@selector(minimumXLabel:)]) {
         HYPScatterLabel *minimumXLabel = [self.dataSource minimumXLabel:self];
         UIFont *font = [minimumXLabel adjustedFontInRect:rect];
         CGPoint point = CGPointMake(CGRectGetMinX(rect) + HYPScatterPlotPadding, CGRectGetMinY(rect));
-        [self drawTextFor:context rect:rect label:minimumXLabel font:font alignment:NSTextAlignmentLeft point:point];
+        [self drawTextInContext:context rect:rect label:minimumXLabel font:font alignment:NSTextAlignmentLeft point:point];
     }
 
     if ([self.dataSource respondsToSelector:@selector(maximumXLabel:)]) {
         HYPScatterLabel *maximumXLabel = [self.dataSource maximumXLabel:self];
         UIFont *font = [maximumXLabel adjustedFontInRect:rect];
         CGPoint point = CGPointMake(CGRectGetMaxX(rect) - CGRectGetMinX(rect) - HYPScatterPlotPadding, CGRectGetMinY(rect));
-        [self drawTextFor:context rect:rect label:maximumXLabel font:font alignment:NSTextAlignmentRight point:point];
+        [self drawTextInContext:context rect:rect label:maximumXLabel font:font alignment:NSTextAlignmentRight point:point];
     }
 }
 
-//for drawing text at different points in the drawing area using core text api
-- (void)drawTextFor:(CGContextRef)context rect:(CGRect)rect label:(HYPScatterLabel *)label font:(UIFont *)font alignment:(NSTextAlignment)alignment point:(CGPoint)point
+- (void)drawTextInContext:(CGContextRef)context rect:(CGRect)rect label:(HYPScatterLabel *)label font:(UIFont *)font alignment:(NSTextAlignment)alignment point:(CGPoint)point
 {
     //  Note: we can't get a perfect bounding box for the text as the methods that are suppose to do it are buggy:
     //  http://stackoverflow.com/a/7014352/550393
     CTFontRef fontRef = CTFontCreateWithName((CFStringRef)font.fontName, font.pointSize, NULL);
-    NSDictionary *attrDictionary = [NSDictionary dictionaryWithObjectsAndKeys:
-                                    CFBridgingRelease(fontRef), (NSString*)kCTFontAttributeName,
-                                    (id)label.textColor.CGColor, (NSString*)kCTForegroundColorAttributeName,
-                                    nil];
+    NSDictionary *attributesDictionary = [NSDictionary dictionaryWithObjectsAndKeys:
+                                          CFBridgingRelease(fontRef), (NSString*)kCTFontAttributeName,
+                                          (id)label.textColor.CGColor, (NSString*)kCTForegroundColorAttributeName,
+                                          nil];
 
-    NSMutableAttributedString *attString = [[NSMutableAttributedString alloc] initWithString:label.text attributes:attrDictionary];
+    NSMutableAttributedString *attributedString = [[NSMutableAttributedString alloc] initWithString:label.text attributes:attributesDictionary];
 
-    NSMutableParagraphStyle *paragraphStyle = [[NSMutableParagraphStyle alloc] init] ;
-    [paragraphStyle setAlignment:alignment];
+    NSMutableParagraphStyle *paragraphStyle = [[NSMutableParagraphStyle alloc] init];
+    paragraphStyle.alignment = alignment;
 
-    [attString addAttribute:NSParagraphStyleAttributeName value:paragraphStyle range:NSMakeRange(0, [label.text length])];
+    [attributedString addAttribute:NSParagraphStyleAttributeName value:paragraphStyle range:NSMakeRange(0, [label.text length])];
 
     CGMutablePathRef path = CGPathCreateMutable();
 
-    CTFramesetterRef framesetter = CTFramesetterCreateWithAttributedString((CFAttributedStringRef)attString);
+    CTFramesetterRef framesetter = CTFramesetterCreateWithAttributedString((CFAttributedStringRef)attributedString);
 
-    CGRect textRect =  CGRectMake(point.x, point.y, CGRectGetMinX(rect), ceilf(font.lineHeight));
+    CGRect textRect = CGRectMake(point.x, point.y, CGRectGetMinX(rect), ceilf(font.lineHeight));
     CGPathAddRect(path, NULL, textRect);
-    CTFrameRef theFrame = CTFramesetterCreateFrame(framesetter, CFRangeMake(0, [attString length]), path, NULL);
+    CTFrameRef frame = CTFramesetterCreateFrame(framesetter, CFRangeMake(0, [attributedString length]), path, NULL);
 
     CFRelease(framesetter);
     CFRelease(path);
 
-    CTFrameDraw(theFrame, context); //draw text
+    CTFrameDraw(frame, context);
 
-    CFRelease(theFrame);
-
-    //  un-comment to see the bounding box of the drawn text
-/*
-    CGContextSetStrokeColorWithColor(context, [UIColor lightGrayColor].CGColor);
-    CGContextSetFillColorWithColor(context, [UIColor clearColor].CGColor);
-    CGContextAddRect(context,textRect);
-    CGContextDrawPath(context, kCGPathFillStroke);
-*/
+    CFRelease(frame);
 }
 
-- (void)drawAxes:(CGContextRef)context rect:(CGRect)rect;
+- (void)drawAxes:(CGContextRef)context rect:(CGRect)rect
 {
     CGFloat locations[3] = {0.0, 0.65, 1.0};
 
@@ -140,24 +131,21 @@ static NSString * const HYPScatterPlotXLineColor = @"EC3031";
     //  where the gradient pattern will start and end
     CGPoint startPoint = CGPointMake(CGRectGetMinX(rect), CGRectGetMinY(rect));
     CGPoint endPoint = CGPointMake(CGRectGetMinX(rect), CGRectGetMaxY(rect));
-
     CGContextSaveGState(context);
     CGContextAddRect(context, CGRectMake(CGRectGetMinX(rect), CGRectGetMinY(rect), 1, CGRectGetMaxY(rect)));
     CGContextClip(context);
-    CGContextDrawLinearGradient (context, gradient, startPoint, endPoint, 0);
+    CGContextDrawLinearGradient(context, gradient, startPoint, endPoint, 0);
     CGContextRestoreGState(context);
 
-    //  gradient based y-axis on right side
+    // gradient based y-axis on right side
     startPoint = CGPointMake(CGRectGetMaxX(rect), CGRectGetMinY(rect));
     endPoint = CGPointMake(CGRectGetMaxX(rect), CGRectGetMaxY(rect));
-
     CGContextSaveGState(context);
     CGContextAddRect(context, CGRectMake(CGRectGetMaxX(rect), CGRectGetMinY(rect), 1, CGRectGetMaxY(rect)));
     CGContextClip(context);
-    CGContextDrawLinearGradient (context, gradient, startPoint, endPoint, 0);
+    CGContextDrawLinearGradient(context, gradient, startPoint, endPoint, 0);
     CGContextRestoreGState(context);
 
-    // release the color resources
     CGColorSpaceRelease(colorspace);
     CGGradientRelease(gradient);
 }
@@ -172,7 +160,7 @@ static NSString * const HYPScatterPlotXLineColor = @"EC3031";
     HYPScatterPoint *minimumVerticalPoint = [self.dataSource minimumYValue:self];
 
     /*
-        min_horizontal and max_horizontal are the left and right boundaries between which the graph is drawn
+     min_horizontal and max_horizontal are the left and right boundaries between which the graph is drawn
 
      min_horizontal or 0   max_horizontal
         <-----------------------------------> min_vertical or 0
@@ -185,7 +173,7 @@ static NSString * const HYPScatterPlotXLineColor = @"EC3031";
         max_vertical and min_vertical are the top and bottom boundaries between which the graph is drawn
      */
 
-    //  we shift all x values translate_x_by amount so that the min_horizontal value starts at 0
+    // we shift all x values translate_x_by amount so that the min_horizontal value starts at 0
     CGFloat translateXBy = -minimumHorizontalPoint.x;
 
     //  we shift all y values translate_y_by amount
@@ -195,14 +183,14 @@ static NSString * const HYPScatterPlotXLineColor = @"EC3031";
         translateYBy = 0.0f;
     }
 
-    //draw a horizontal line where y=0
+    // draw a horizontal line where y = 0
     CGContextSetLineWidth(context, 2);
     CGContextSetStrokeColorWithColor(context, self.xAxisColor.CGColor);
 
-    //through out the following code CGRectGetMinY and CGRectGetMinX help us get the margins for the drawing box
+    // through out the following code CGRectGetMinY and CGRectGetMinX help us get the margins for the drawing box
     CGFloat zeroLine = translateYBy;
 
-    //normalized co-ordinate of the horizontal line indicating where is y = 0
+    // normalized co-ordinate of the horizontal line indicating where is y = 0
     zeroLine = zeroLine / (maximumVerticalPoint.y + translateYBy) * self.graphHeight + CGRectGetMinY(rect);
 
     CGContextMoveToPoint(context, 0, zeroLine);
@@ -210,7 +198,7 @@ static NSString * const HYPScatterPlotXLineColor = @"EC3031";
 
     CGContextStrokePath(context);
 
-    //draw a horizontal line on average value of y
+    // draw a horizontal line on average value of y
     if ([self.dataSource respondsToSelector:@selector(averageYValue:)]) {
         CGFloat averageVertical = [self.dataSource averageYValue:self];
 
@@ -219,7 +207,7 @@ static NSString * const HYPScatterPlotXLineColor = @"EC3031";
         CGFloat dash[] = {6.0, 6.0};
         CGContextSetLineDash(context, 0.0, dash, 2);
 
-        //  normalization is done by dividing a value by maximum value in the list, see below inside for loop
+        // normalization is done by dividing a value by maximum value in the list, see below inside for loop
         CGFloat averageLine = (averageVertical + translateYBy) / (maximumVerticalPoint.y + translateYBy) * self.graphHeight + CGRectGetMinY(rect);
 
         CGContextMoveToPoint(context, 0, averageLine);
@@ -227,21 +215,21 @@ static NSString * const HYPScatterPlotXLineColor = @"EC3031";
         CGContextStrokePath(context);
         CGContextSetLineDash(context, 0, NULL, 0);  //remove the dash
 
-        HYPScatterLabel* averageLabel = [self.dataSource averageLabel:self];
+        HYPScatterLabel *averageLabel = [self.dataSource averageLabel:self];
         UIFont *font = [averageLabel adjustedFontInRect:rect];
         CGPoint point = CGPointMake(0, averageLine);
-        [self drawTextFor:context rect:rect label:averageLabel font:font alignment:NSTextAlignmentCenter point:point];
+        [self drawTextInContext:context rect:rect label:averageLabel font:font alignment:NSTextAlignmentCenter point:point];
     }
 
 
-    for (int pointNo=0; pointNo < scatterPoints.count; pointNo++) {
-        //  normalization is done by dividing a value by maximum value in the list
-        //  for each point get their normalized co-ordinates with respect to the height and width of the drawing space
-        HYPScatterPoint *point = scatterPoints[pointNo];
+    for (NSInteger index = 0; index < scatterPoints.count; index++) {
+        // normalization is done by dividing a value by maximum value in the list
+        // for each point get their normalized co-ordinates with respect to the height and width of the drawing space
+        HYPScatterPoint *point = scatterPoints[index];
         CGFloat x = (point.x + translateXBy) / (maximumHorizontalPoint.x + translateXBy) * self.graphWidth + CGRectGetMinX(rect);
         CGFloat y = (point.y + translateYBy) / (maximumVerticalPoint.y + translateYBy) * self.graphHeight + CGRectGetMinY(rect);
 
-        //draw the point as circle
+        // draw the point as circle
         CGRect rect = CGRectMake(x - HYPScatterPlotCircleRadius, y - HYPScatterPlotCircleRadius, 2 * HYPScatterPlotCircleRadius, 2 * HYPScatterPlotCircleRadius);
         CGContextSetStrokeColorWithColor(context, point.strokeColor.CGColor);
         CGContextSetFillColorWithColor(context, point.fillColor.CGColor);
@@ -250,8 +238,6 @@ static NSString * const HYPScatterPlotXLineColor = @"EC3031";
     }
 }
 
-// Only override drawRect: if you perform custom drawing.
-// An empty implementation adversely affects performance during animation.
 - (void)drawRect:(CGRect)rect
 {
     CGRect drawInRect = CGRectInset(rect, 0.10 * rect.size.width, 15);
@@ -259,19 +245,10 @@ static NSString * const HYPScatterPlotXLineColor = @"EC3031";
 
     CGContextRef context = UIGraphicsGetCurrentContext();
 
-    //  width and height of the bounding box inside which the graph is drawn
     self.graphWidth = CGRectGetWidth(drawInRect);
     self.graphHeight = CGRectGetHeight(drawInRect);
 
-    //un-comment to see the bounding box of the drawing area
-    /*
-    CGContextSetStrokeColorWithColor(context, [UIColor lightGrayColor].CGColor);
-    CGContextSetFillColorWithColor(context, [UIColor clearColor].CGColor);
-    CGContextAddRect(context, newRect);
-    CGContextDrawPath(context, kCGPathFillStroke);
-    */
-
-    // flip the co-ordinate system
+    //  width and height of the bounding box inside which the graph is drawn
     CGContextSetTextMatrix(context, CGAffineTransformIdentity);
     CGContextTranslateCTM(context, 0, self.bounds.size.height);
     CGContextScaleCTM(context, 1.0, -1.0);
