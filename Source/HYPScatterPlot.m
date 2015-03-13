@@ -8,16 +8,16 @@
 
 #import "UIColor+Hex.h"
 
-static CGFloat graphWidth = 0.0f;
-static CGFloat graphHeight = 0.0f;
-
 static CGFloat kCircleRadius = 7.0f;
 static CGFloat kPadding = 10.0f;
 
-static NSString * backgroundColor = @"0E223D";
-static NSString * xLineColor = @"EC3031";
+static NSString * const HYPScatterPlotBackgroundColor = @"0E223D";
+static NSString * const HYPScatterPlotXLineColor = @"EC3031";
 
 @interface HYPScatterPlot()
+
+@property (nonatomic) CGFloat graphWidth;
+@property (nonatomic) CGFloat graphHeight;
 
 @end
 
@@ -28,11 +28,11 @@ static NSString * xLineColor = @"EC3031";
     self = [super initWithFrame:frame];
     if (!self) return nil;
 
-    if (self.backgroundColor == nil) self.backgroundColor = [UIColor colorFromHex:backgroundColor];
-    if (self.xAxisColor == nil) self.xAxisColor = [UIColor colorFromHex:xLineColor];
+    if (self.backgroundColor == nil) self.backgroundColor = [UIColor colorFromHex:HYPScatterPlotBackgroundColor];
+    if (self.xAxisColor == nil) self.xAxisColor = [UIColor colorFromHex:HYPScatterPlotXLineColor];
     if (self.averageLineColor == nil) self.averageLineColor = [UIColor whiteColor];
     if (self.yAxisMidGradient == nil) self.yAxisMidGradient = [UIColor whiteColor];
-    if (self.yAxisEndGradient == nil) self.yAxisEndGradient = [UIColor colorFromHex:backgroundColor];
+    if (self.yAxisEndGradient == nil) self.yAxisEndGradient = [UIColor colorFromHex:HYPScatterPlotBackgroundColor];
 
     return self;
 }
@@ -201,7 +201,7 @@ static NSString * xLineColor = @"EC3031";
     CGFloat zeroLine = translateYBy;
 
     //normalized co-ordinate of the horizontal line indicating where is y = 0
-    zeroLine = zeroLine / (maxVertical.y + translateYBy) * graphHeight + CGRectGetMinY(rect);
+    zeroLine = zeroLine / (maxVertical.y + translateYBy) * self.graphHeight + CGRectGetMinY(rect);
 
     CGContextMoveToPoint(context, 0, zeroLine);
     CGContextAddLineToPoint(context, self.bounds.size.width, zeroLine);
@@ -218,7 +218,7 @@ static NSString * xLineColor = @"EC3031";
         CGContextSetLineDash(context, 0.0, dash, 2);
 
         //  normalization is done by dividing a value by maximum value in the list, see below inside for loop
-        CGFloat averageLine = (averageVertical + translateYBy) / (maxVertical.y + translateYBy) * graphHeight + CGRectGetMinY(rect);
+        CGFloat averageLine = (averageVertical + translateYBy) / (maxVertical.y + translateYBy) * self.graphHeight + CGRectGetMinY(rect);
 
         CGContextMoveToPoint(context, 0, averageLine);
         CGContextAddLineToPoint(context, self.bounds.size.width, averageLine);
@@ -236,8 +236,8 @@ static NSString * xLineColor = @"EC3031";
         //  normalization is done by dividing a value by maximum value in the list
         //  for each point get their normalized co-ordinates with respect to the height and width of the drawing space
         HYPScatterPoint *point = scatterPoints[pointNo];
-        CGFloat x = (point.x + translateXBy) / (maxHorizontal.x + translateXBy) * graphWidth + CGRectGetMinX(rect);
-        CGFloat y = (point.y + translateYBy) / (maxVertical.y + translateYBy) * graphHeight + CGRectGetMinY(rect);
+        CGFloat x = (point.x + translateXBy) / (maxHorizontal.x + translateXBy) * self.graphWidth + CGRectGetMinX(rect);
+        CGFloat y = (point.y + translateYBy) / (maxVertical.y + translateYBy) * self.graphHeight + CGRectGetMinY(rect);
 
         //draw the point as circle
         CGRect rect = CGRectMake(x-kCircleRadius, y-kCircleRadius, 2*kCircleRadius, 2*kCircleRadius);
@@ -258,8 +258,8 @@ static NSString * xLineColor = @"EC3031";
     CGContextRef context = UIGraphicsGetCurrentContext();
 
     //  width and height of the bounding box inside which the graph is drawn
-    graphWidth = CGRectGetWidth(drawInRect);
-    graphHeight = CGRectGetHeight(drawInRect);
+    self.graphWidth = CGRectGetWidth(drawInRect);
+    self.graphHeight = CGRectGetHeight(drawInRect);
 
     //un-comment to see the bounding box of the drawing area
     /*
