@@ -14,7 +14,7 @@ static CGFloat graphHeight = 0.0f;
 static CGFloat kCircleRadius = 7.0f;
 static CGFloat kPadding = 10.0f;
 
-static NSString * bgColor = @"0E223D";
+static NSString * backgroundColor = @"0E223D";
 static NSString * xLineColor = @"EC3031";
 
 @interface HYPScatterPlot()
@@ -28,11 +28,11 @@ static NSString * xLineColor = @"EC3031";
     self = [super initWithFrame:frame];
     if (!self) return nil;
 
-    if (self.backgroundColor == nil) self.backgroundColor = [UIColor colorFromHex:bgColor];
+    if (self.backgroundColor == nil) self.backgroundColor = [UIColor colorFromHex:backgroundColor];
     if (self.xAxisColor == nil) self.xAxisColor = [UIColor colorFromHex:xLineColor];
     if (self.averageLineColor == nil) self.averageLineColor = [UIColor whiteColor];
     if (self.yAxisMidGradient == nil) self.yAxisMidGradient = [UIColor whiteColor];
-    if (self.yAxisEndGradient == nil) self.yAxisEndGradient = [UIColor colorFromHex:bgColor];
+    if (self.yAxisEndGradient == nil) self.yAxisEndGradient = [UIColor colorFromHex:backgroundColor];
 
     return self;
 }
