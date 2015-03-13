@@ -30,7 +30,7 @@ static NSString * xLineColor = @"EC3031";
 
     if (self.backgroundColor == nil) self.backgroundColor = [UIColor colorFromHex:bgColor];
     if (self.xAxisColor == nil) self.xAxisColor = [UIColor colorFromHex:xLineColor];
-    if (self.avgLineColor == nil) self.avgLineColor = [UIColor whiteColor];
+    if (self.averageLineColor == nil) self.averageLineColor = [UIColor whiteColor];
     if (self.yAxisMidGradient == nil) self.yAxisMidGradient = [UIColor whiteColor];
     if (self.yAxisEndGradient == nil) self.yAxisEndGradient = [UIColor colorFromHex:bgColor];
 
@@ -209,26 +209,26 @@ static NSString * xLineColor = @"EC3031";
     CGContextStrokePath(context);
 
     //draw a horizontal line on average value of y
-    if ([self.dataSource respondsToSelector:@selector(avgYValue:)]) {
-        CGFloat avgVertical = [self.dataSource avgYValue:self];
+    if ([self.dataSource respondsToSelector:@selector(averageYValue:)]) {
+        CGFloat averageVertical = [self.dataSource averageYValue:self];
 
         CGContextSetLineWidth(context, 2);
-        CGContextSetStrokeColorWithColor(context, self.avgLineColor.CGColor);
+        CGContextSetStrokeColorWithColor(context, self.averageLineColor.CGColor);
         CGFloat dash[] = {6.0, 6.0};
         CGContextSetLineDash(context, 0.0, dash, 2);
 
         //  normalization is done by dividing a value by maximum value in the list, see below inside for loop
-        CGFloat avgLine = (avgVertical + translateYBy) / (maxVertical.y + translateYBy) * graphHeight + CGRectGetMinY(rect);
+        CGFloat averageLine = (averageVertical + translateYBy) / (maxVertical.y + translateYBy) * graphHeight + CGRectGetMinY(rect);
 
-        CGContextMoveToPoint(context, 0, avgLine);
-        CGContextAddLineToPoint(context, self.bounds.size.width, avgLine);
+        CGContextMoveToPoint(context, 0, averageLine);
+        CGContextAddLineToPoint(context, self.bounds.size.width, averageLine);
         CGContextStrokePath(context);
         CGContextSetLineDash(context, 0, NULL, 0);  //remove the dash
 
-        HYPScatterLabel* avgLabel = [self.dataSource avgLabel:self];
-        UIFont *font = [self getAdjustedFont:avgLabel rect:rect];
-        CGPoint point = CGPointMake(0, avgLine);
-        [self drawTextFor:context rect:rect label:avgLabel font:font alignment:NSTextAlignmentCenter point:point];
+        HYPScatterLabel* averageLabel = [self.dataSource averageLabel:self];
+        UIFont *font = [self getAdjustedFont:averageLabel rect:rect];
+        CGPoint point = CGPointMake(0, averageLine);
+        [self drawTextFor:context rect:rect label:averageLabel font:font alignment:NSTextAlignmentCenter point:point];
     }
 
 
