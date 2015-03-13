@@ -6,7 +6,7 @@
 @property (nonatomic) UIColor *textColor;
 @property (nonatomic) NSString *text;
 @property (nonatomic) UIFont *font;
-@property (assign) BOOL autoSizeText;
+@property (nonatomic) BOOL autoSizeText;
 
 - (instancetype)initWithText:(NSString *)text textColor:(UIColor *)textColor font:(UIFont *)font autoSizeText:(BOOL)autoSizeText;
 
