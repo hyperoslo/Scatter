@@ -1,4 +1,4 @@
-#import "HYPScatterPoint.H"
+#import "HYPScatterPoint.h"
 
 @implementation HYPScatterPoint
 
