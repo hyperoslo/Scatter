@@ -54,31 +54,31 @@ static NSString * const HYPScatterPlotXLineColor = @"EC3031";
 - (void)drawLabels:(CGContextRef)context rect:(CGRect)rect
 {
     if ([self.dataSource respondsToSelector:@selector(maximumYLabel:)]) {
-        HYPScatterLabel *maxYLabel = [self.dataSource maximumYLabel:self];
-        UIFont *font = [self getAdjustedFont:maxYLabel rect:rect];
+        HYPScatterLabel *maximumYLabel = [self.dataSource maximumYLabel:self];
+        UIFont *font = [self getAdjustedFont:maximumYLabel rect:rect];
         CGPoint point = CGPointMake(0, CGRectGetMaxY(rect) - font.lineHeight);
-        [self drawTextFor:context rect:rect label:maxYLabel font:font alignment:NSTextAlignmentCenter point:point];
+        [self drawTextFor:context rect:rect label:maximumYLabel font:font alignment:NSTextAlignmentCenter point:point];
     }
 
     if ([self.dataSource respondsToSelector:@selector(minimumYLabel:)]) {
-        HYPScatterLabel *minYLabel = [self.dataSource minimumYLabel:self];
-        UIFont *font = [self getAdjustedFont:minYLabel rect:rect];
+        HYPScatterLabel *minimumYLabel = [self.dataSource minimumYLabel:self];
+        UIFont *font = [self getAdjustedFont:minimumYLabel rect:rect];
         CGPoint point = CGPointMake(0, CGRectGetMinY(rect));
-        [self drawTextFor:context rect:rect label:minYLabel font:font alignment:NSTextAlignmentCenter point:point];
+        [self drawTextFor:context rect:rect label:minimumYLabel font:font alignment:NSTextAlignmentCenter point:point];
     }
 
     if ([self.dataSource respondsToSelector:@selector(minimumXLabel:)]) {
-        HYPScatterLabel *minXLabel = [self.dataSource minimumXLabel:self];
-        UIFont *font = [self getAdjustedFont:minXLabel rect:rect];
+        HYPScatterLabel *minimumXLabel = [self.dataSource minimumXLabel:self];
+        UIFont *font = [self getAdjustedFont:minimumXLabel rect:rect];
         CGPoint point = CGPointMake(CGRectGetMinX(rect) + HYPScatterPlotPadding, CGRectGetMinY(rect));
-        [self drawTextFor:context rect:rect label:minXLabel font:font alignment:NSTextAlignmentLeft point:point];
+        [self drawTextFor:context rect:rect label:minimumXLabel font:font alignment:NSTextAlignmentLeft point:point];
     }
 
     if ([self.dataSource respondsToSelector:@selector(maximumXLabel:)]) {
-        HYPScatterLabel *maxXLabel = [self.dataSource maximumXLabel:self];
-        UIFont *font = [self getAdjustedFont:maxXLabel rect:rect];
+        HYPScatterLabel *maximumXLabel = [self.dataSource maximumXLabel:self];
+        UIFont *font = [self getAdjustedFont:maximumXLabel rect:rect];
         CGPoint point = CGPointMake(CGRectGetMaxX(rect) - CGRectGetMinX(rect) - HYPScatterPlotPadding, CGRectGetMinY(rect));
-        [self drawTextFor:context rect:rect label:maxXLabel font:font alignment:NSTextAlignmentRight point:point];
+        [self drawTextFor:context rect:rect label:maximumXLabel font:font alignment:NSTextAlignmentRight point:point];
     }
 }
 
@@ -180,10 +180,10 @@ static NSString * const HYPScatterPlotXLineColor = @"EC3031";
 {
     NSArray *scatterPoints = [self.dataSource scatterPointsForScatterPlot:self];
 
-    HYPScatterPoint *maxHorizontal = [self.dataSource maximumXValue:self];
-    HYPScatterPoint *minHorizontal = [self.dataSource minimumXValue:self];
-    HYPScatterPoint *maxVertical = [self.dataSource maximumYValue:self];
-    HYPScatterPoint *minVertical = [self.dataSource minimumYValue:self];
+    HYPScatterPoint *maximumHorizontalPoint = [self.dataSource maximumXValue:self];
+    HYPScatterPoint *minimumHorizontalPoint = [self.dataSource minimumXValue:self];
+    HYPScatterPoint *maximumVerticalPoint = [self.dataSource maximumYValue:self];
+    HYPScatterPoint *minimumVerticalPoint = [self.dataSource minimumYValue:self];
 
     /*
         min_horizontal and max_horizontal are the left and right boundaries between which the graph is drawn
@@ -200,12 +200,12 @@ static NSString * const HYPScatterPlotXLineColor = @"EC3031";
      */
 
     //  we shift all x values translate_x_by amount so that the min_horizontal value starts at 0
-    CGFloat translateXBy = -minHorizontal.x;
+    CGFloat translateXBy = -minimumHorizontalPoint.x;
 
     //  we shift all y values translate_y_by amount
     //  we shouldn't shift y values if minimum y value is non-zero as we have to draw the horizontal line where y=0
-    CGFloat translateYBy = -minVertical.y;
-    if (minVertical.y > 0) {
+    CGFloat translateYBy = -minimumVerticalPoint.y;
+    if (minimumVerticalPoint.y > 0) {
         translateYBy = 0.0f;
     }
 
@@ -217,7 +217,7 @@ static NSString * const HYPScatterPlotXLineColor = @"EC3031";
     CGFloat zeroLine = translateYBy;
 
     //normalized co-ordinate of the horizontal line indicating where is y = 0
-    zeroLine = zeroLine / (maxVertical.y + translateYBy) * self.graphHeight + CGRectGetMinY(rect);
+    zeroLine = zeroLine / (maximumVerticalPoint.y + translateYBy) * self.graphHeight + CGRectGetMinY(rect);
 
     CGContextMoveToPoint(context, 0, zeroLine);
     CGContextAddLineToPoint(context, self.bounds.size.width, zeroLine);
@@ -234,7 +234,7 @@ static NSString * const HYPScatterPlotXLineColor = @"EC3031";
         CGContextSetLineDash(context, 0.0, dash, 2);
 
         //  normalization is done by dividing a value by maximum value in the list, see below inside for loop
-        CGFloat averageLine = (averageVertical + translateYBy) / (maxVertical.y + translateYBy) * self.graphHeight + CGRectGetMinY(rect);
+        CGFloat averageLine = (averageVertical + translateYBy) / (maximumVerticalPoint.y + translateYBy) * self.graphHeight + CGRectGetMinY(rect);
 
         CGContextMoveToPoint(context, 0, averageLine);
         CGContextAddLineToPoint(context, self.bounds.size.width, averageLine);
@@ -252,8 +252,8 @@ static NSString * const HYPScatterPlotXLineColor = @"EC3031";
         //  normalization is done by dividing a value by maximum value in the list
         //  for each point get their normalized co-ordinates with respect to the height and width of the drawing space
         HYPScatterPoint *point = scatterPoints[pointNo];
-        CGFloat x = (point.x + translateXBy) / (maxHorizontal.x + translateXBy) * self.graphWidth + CGRectGetMinX(rect);
-        CGFloat y = (point.y + translateYBy) / (maxVertical.y + translateYBy) * self.graphHeight + CGRectGetMinY(rect);
+        CGFloat x = (point.x + translateXBy) / (maximumHorizontalPoint.x + translateXBy) * self.graphWidth + CGRectGetMinX(rect);
+        CGFloat y = (point.y + translateYBy) / (maximumVerticalPoint.y + translateYBy) * self.graphHeight + CGRectGetMinY(rect);
 
         //draw the point as circle
         CGRect rect = CGRectMake(x - HYPScatterPlotCircleRadius, y - HYPScatterPlotCircleRadius, 2 * HYPScatterPlotCircleRadius, 2 * HYPScatterPlotCircleRadius);
