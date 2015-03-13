@@ -1,6 +1,6 @@
 Pod::Spec.new do |s|
   s.name             = "Scatter"
-  s.version          = "0.1"
+  s.version          = "0.1.0"
   s.homepage         = "https://github.com/hyperoslo/Scatter"
   s.license          = 'MIT'
   s.author           = { "Hyper AS" => "teknologi@hyper.no" }
@@ -12,6 +12,7 @@ Pod::Spec.new do |s|
 
   s.source_files = 'Source/**/*'
 
-#  s.frameworks = 'UIKit', 'MapKit'
-#  s.dependency 'AFNetworking', '~> 2.3'
+  s.frameworks = 'UIKit', 'Foundation', 'CoreText'
+  
+  s.dependency 'Hex'
 end

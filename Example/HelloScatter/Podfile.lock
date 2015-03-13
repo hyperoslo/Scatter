@@ -1,0 +1,17 @@
+PODS:
+  - Hex (1.1.1)
+  - Scatter (0.1.0):
+    - Hex
+
+DEPENDENCIES:
+  - Scatter (from `../../`)
+
+EXTERNAL SOURCES:
+  Scatter:
+    :path: ../../
+
+SPEC CHECKSUMS:
+  Hex: 26fa055654eb713e45bb9771046a2d26c0c086f6
+  Scatter: bee4c49c93620f01bcc4c4aced191c156d8a6b19
+
+COCOAPODS: 0.36.0
