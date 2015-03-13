@@ -6,12 +6,12 @@
 {
     self = [self init];
     if (!self) return nil;
-    
+
     _fillColor = fillColor;
     _strokeColor = strokeColor;
     _x = x;
     _y = y;
-    
+
     return self;
 }
 

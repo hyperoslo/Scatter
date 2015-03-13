@@ -28,11 +28,25 @@ static NSString * const HYPScatterPlotXLineColor = @"EC3031";
     self = [super initWithFrame:frame];
     if (!self) return nil;
 
-    if (self.backgroundColor == nil) self.backgroundColor = [UIColor colorFromHex:HYPScatterPlotBackgroundColor];
-    if (self.xAxisColor == nil) self.xAxisColor = [UIColor colorFromHex:HYPScatterPlotXLineColor];
-    if (self.averageLineColor == nil) self.averageLineColor = [UIColor whiteColor];
-    if (self.yAxisMidGradient == nil) self.yAxisMidGradient = [UIColor whiteColor];
-    if (self.yAxisEndGradient == nil) self.yAxisEndGradient = [UIColor colorFromHex:HYPScatterPlotBackgroundColor];
+    if (self.backgroundColor) {
+        self.backgroundColor = [UIColor colorFromHex:HYPScatterPlotBackgroundColor];
+    }
+
+    if (!self.xAxisColor) {
+        self.xAxisColor = [UIColor colorFromHex:HYPScatterPlotXLineColor];
+    }
+
+    if (!self.averageLineColor) {
+        self.averageLineColor = [UIColor whiteColor];
+    }
+
+    if (!self.yAxisMidGradient) {
+        self.yAxisMidGradient = [UIColor whiteColor];
+    }
+
+    if (!self.yAxisEndGradient) {
+        self.yAxisEndGradient = [UIColor colorFromHex:HYPScatterPlotBackgroundColor];
+    }
 
     return self;
 }
@@ -75,7 +89,7 @@ static NSString * const HYPScatterPlotXLineColor = @"EC3031";
     CGFloat scaledFontSize = (0.05) * CGRectGetWidth(rect);
     UIFont *font = label.font;
 
-    if (label.autoSizeText == YES) {
+    if (label.autoSizeText) {
         font = [UIFont fontWithName:label.font.fontName size:scaledFontSize];
     }
 
@@ -191,7 +205,9 @@ static NSString * const HYPScatterPlotXLineColor = @"EC3031";
     //  we shift all y values translate_y_by amount
     //  we shouldn't shift y values if minimum y value is non-zero as we have to draw the horizontal line where y=0
     CGFloat translateYBy = -minVertical.y;
-    if (minVertical.y > 0) translateYBy = 0.0f;
+    if (minVertical.y > 0) {
+        translateYBy = 0.0f;
+    }
 
     //draw a horizontal line where y=0
     CGContextSetLineWidth(context, 2);
