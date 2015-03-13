@@ -1,39 +1,38 @@
 @import UIKit;
 
-@protocol HYPScatterPlotDatasource;
+@protocol HYPScatterPlotDataSource;
+
 @class HYPScatterPoint;
 @class HYPScatterLabel;
 
 @interface HYPScatterPlot : UIView
-{
-    
-}
 
-//optional properties
-@property (nonatomic) UIColor *avgLineColor;
+@property (nonatomic) UIColor *averageLineColor;
 @property (nonatomic) UIColor *xAxisColor;
 @property (nonatomic) UIColor *yAxisMidGradient;
 @property (nonatomic) UIColor *yAxisEndGradient;
 
-//required properties
-@property (nonatomic, weak) id<HYPScatterPlotDatasource> delegate;
+@property (nonatomic, weak) id<HYPScatterPlotDataSource> dataSource;
+
 @end
 
-@protocol HYPScatterPlotDatasource <NSObject>
+@protocol HYPScatterPlotDataSource <NSObject>
 
 @required
-- (NSArray *)pointForScatterPlot:(HYPScatterPlot *)scatterPlot; //should return an NSArray of HYPScatterPoint objects
+
+- (NSArray *)scatterPointsForScatterPlot:(HYPScatterPlot *)scatterPlot;
 - (HYPScatterPoint *)maximumXValue:(HYPScatterPlot *)scatterPlot;
 - (HYPScatterPoint *)minimumXValue:(HYPScatterPlot *)scatterPlot;
 - (HYPScatterPoint *)maximumYValue:(HYPScatterPlot *)scatterPlot;
 - (HYPScatterPoint *)minimumYValue:(HYPScatterPlot *)scatterPlot;
 
 @optional
-- (CGFloat)avgYValue:(HYPScatterPlot*)scatterPlot;
+
+- (CGFloat)averageYValue:(HYPScatterPlot *)scatterPlot;
 - (HYPScatterLabel *)minimumYLabel:(HYPScatterPlot *)scatterPlot;
 - (HYPScatterLabel *)maximumYLabel:(HYPScatterPlot *)scatterPlot;
 - (HYPScatterLabel *)minimumXLabel:(HYPScatterPlot *)scatterPlot;
 - (HYPScatterLabel *)maximumXLabel:(HYPScatterPlot *)scatterPlot;
-- (HYPScatterLabel *)avgLabel:(HYPScatterPlot *)scatterPlot;
+- (HYPScatterLabel *)averageLabel:(HYPScatterPlot *)scatterPlot;
 
 @end

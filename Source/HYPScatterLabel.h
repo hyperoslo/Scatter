@@ -2,14 +2,14 @@
 @import Foundation;
 
 @interface HYPScatterLabel : NSObject
-{
-    
-}
-@property (nonatomic) UIColor *textColor;
-@property (nonatomic) NSString* text;
-@property (nonatomic) UIFont* font; //the font to use for drawing the label
-@property (assign) BOOL autoSizeText;   //if YES then ignore the size specified in font property
 
-- (id)initWithText:(NSString*)text textColor:(UIColor*)textColor font:(UIFont*)font autosize:(BOOL)autoSizeText;
+@property (nonatomic) UIColor *textColor;
+@property (nonatomic) NSString *text;
+@property (nonatomic) UIFont *font;
+@property (nonatomic) BOOL autoSizeText;
+
+- (instancetype)initWithText:(NSString *)text textColor:(UIColor *)textColor font:(UIFont *)font autoSizeText:(BOOL)autoSizeText;
+
+- (UIFont *)adjustedFontInRect:(CGRect)rect;
 
 @end

@@ -1,10 +1,12 @@
 #import "DemoViewController.h"
+
 #import "HYPScatterPoint.h"
 #import "HYPScatterLabel.h"
+#import "HYPScatterPlot.h"
 
 #import "UIColor+Hex.h"
 
-@interface DemoViewController ()
+@interface DemoViewController () <HYPScatterPlotDataSource>
 
 @property (nonatomic, weak) IBOutlet UIView *uiView;
 @property (nonatomic) HYPScatterPlot *scatterPlot;
@@ -17,17 +19,17 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-    
+
     [self.uiView addSubview:self.scatterPlot];
-    
+
     UIColor *fillColor1 = [UIColor redColor];
     UIColor *fillColor2 = [UIColor yellowColor];
     UIColor *fillColor3 = [UIColor lightGrayColor];
-    
+
     UIColor *strokeColor1 = [UIColor whiteColor];
     UIColor *strokeColor2 = [UIColor yellowColor];
     UIColor *strokeColor3 = [UIColor whiteColor];
-    
+
     self.scatterPoints = [NSArray arrayWithObjects:
                           [[HYPScatterPoint alloc] initWithValues:fillColor1 strokeColor:strokeColor1 x:0.0f y:0.0f],
                           [[HYPScatterPoint alloc] initWithValues:fillColor2 strokeColor:strokeColor2 x:100.0f y:20.0f],
@@ -42,7 +44,7 @@
 - (void)viewDidLayoutSubviews
 {
     [super viewDidLayoutSubviews];
-    
+
     _scatterPlot.frame = self.uiView.bounds;
     [_scatterPlot setNeedsDisplay];
 }
@@ -50,19 +52,16 @@
 - (HYPScatterPlot *)scatterPlot
 {
     if (_scatterPlot) return _scatterPlot;
-    
+
     _scatterPlot = [[HYPScatterPlot alloc] initWithFrame:self.view.bounds];
-    _scatterPlot.delegate = self;
-//    _scatterPlot.backgroundColor = [UIColor grayColor];
-//    _scatterPlot.avgLineColor = [UIColor blueColor];
-//    _scatterPlot.xAxisColor = [UIColor yellowColor];
-    
+    _scatterPlot.dataSource = self;
+
     return _scatterPlot;
 }
 
 #pragma mark HYPScatterPlotDatasource
 
-- (NSArray *)pointForScatterPlot:(HYPScatterPlot *)scatterPlot
+- (NSArray *)scatterPointsForScatterPlot:(HYPScatterPlot *)scatterPlot
 {
     return self.scatterPoints;
 }
@@ -70,11 +69,11 @@
 - (HYPScatterPoint *)maximumXValue:(HYPScatterPlot *)scatterPlot
 {
     __block HYPScatterPoint* maximumX = self.scatterPoints[0];
-    
+
     [self.scatterPoints enumerateObjectsUsingBlock:^(HYPScatterPoint *obj, NSUInteger idx, BOOL *stop) {
         if (obj.x > maximumX.x) maximumX = obj;
     }];
-    
+
     return maximumX;
 }
 
@@ -84,18 +83,18 @@
     [self.scatterPoints enumerateObjectsUsingBlock:^(HYPScatterPoint *obj, NSUInteger idx, BOOL *stop) {
         if (obj.x < minimumX.x) minimumX = obj;
     }];
-    
+
     return minimumX;
 }
 
 - (HYPScatterPoint *)maximumYValue:(HYPScatterPlot *)scatterPlot
 {
     __block HYPScatterPoint* maximumY = self.scatterPoints[0];
-    
+
     [self.scatterPoints enumerateObjectsUsingBlock:^(HYPScatterPoint *obj, NSUInteger idx, BOOL *stop) {
         if (obj.y > maximumY.y) maximumY = obj;
     }];
-    
+
     return maximumY;
 }
 
@@ -105,11 +104,11 @@
     [self.scatterPoints enumerateObjectsUsingBlock:^(HYPScatterPoint *obj, NSUInteger idx, BOOL *stop) {
         if (obj.y < minimumY.y) minimumY = obj;
     }];
-    
+
     return minimumY;
 }
 
-- (CGFloat)avgYValue:(HYPScatterPlot *)scatterPlot
+- (CGFloat)averageYValue:(HYPScatterPlot *)scatterPlot
 {
     __block CGFloat sum = 0.0;
     __block CGFloat count = 0;
@@ -117,35 +116,35 @@
         sum += obj.y;
         ++count;
     }];
-    
+
     if (count == 0) return 0;
-    
+
     return sum/count;
 }
 
 - (HYPScatterLabel *)minimumYLabel:(HYPScatterPlot *)scatterPlot
 {
-    return [[HYPScatterLabel alloc] initWithText:@"- 5,4%" textColor:[UIColor whiteColor] font:[UIFont systemFontOfSize:22] autosize:YES];
+    return [[HYPScatterLabel alloc] initWithText:@"- 5,4%" textColor:[UIColor whiteColor] font:[UIFont systemFontOfSize:22] autoSizeText:YES];
 }
 
 - (HYPScatterLabel *)maximumYLabel:(HYPScatterPlot *)scatterPlot
 {
-    return [[HYPScatterLabel alloc] initWithText:@"+ 7,2%" textColor:[UIColor redColor] font:[UIFont systemFontOfSize:22] autosize:YES];
+    return [[HYPScatterLabel alloc] initWithText:@"+ 7,2%" textColor:[UIColor redColor] font:[UIFont systemFontOfSize:22] autoSizeText:YES];
 }
 
 - (HYPScatterLabel *)minimumXLabel:(HYPScatterPlot *)scatterPlot
 {
-    return [[HYPScatterLabel alloc] initWithText:@"19,0" textColor:[UIColor redColor] font:[UIFont systemFontOfSize:22] autosize:YES];
+    return [[HYPScatterLabel alloc] initWithText:@"19,0" textColor:[UIColor redColor] font:[UIFont systemFontOfSize:22] autoSizeText:YES];
 }
 
 - (HYPScatterLabel *)maximumXLabel:(HYPScatterPlot *)scatterPlot
 {
-    return [[HYPScatterLabel alloc] initWithText:@"35,5 mill" textColor:[UIColor whiteColor] font:[UIFont systemFontOfSize:22] autosize:YES];
+    return [[HYPScatterLabel alloc] initWithText:@"35,5 mill" textColor:[UIColor whiteColor] font:[UIFont systemFontOfSize:22] autoSizeText:YES];
 }
 
-- (HYPScatterLabel *)avgLabel:(HYPScatterPlot *)scatterPlot
+- (HYPScatterLabel *)averageLabel:(HYPScatterPlot *)scatterPlot
 {
-    return [[HYPScatterLabel alloc] initWithText:@"+1,3%" textColor:[UIColor whiteColor] font:[UIFont systemFontOfSize:22] autosize:YES];
+    return [[HYPScatterLabel alloc] initWithText:@"+1,3%" textColor:[UIColor whiteColor] font:[UIFont systemFontOfSize:22] autoSizeText:YES];
 }
 
 @end
