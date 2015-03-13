@@ -8,6 +8,6 @@
 @property (nonatomic) UIFont *font;
 @property (assign) BOOL autoSizeText;
 
-- (instancetype)initWithText:(NSString *)text textColor:(UIColor *)textColor font:(UIFont *)font autosize:(BOOL)autoSize;
+- (instancetype)initWithText:(NSString *)text textColor:(UIColor *)textColor font:(UIFont *)font autoSizeText:(BOOL)autoSizeText;
 
 @end
