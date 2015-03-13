@@ -8,8 +8,8 @@
 
 #import "UIColor+Hex.h"
 
-static CGFloat kCircleRadius = 7.0f;
-static CGFloat kPadding = 10.0f;
+static const CGFloat HYPScatterPlotCircleRadius = 7.0f;
+static const CGFloat HYPScatterPlotPadding = 10.0f;
 
 static NSString * const HYPScatterPlotBackgroundColor = @"0E223D";
 static NSString * const HYPScatterPlotXLineColor = @"EC3031";
@@ -70,14 +70,14 @@ static NSString * const HYPScatterPlotXLineColor = @"EC3031";
     if ([self.dataSource respondsToSelector:@selector(minimumXLabel:)]) {
         HYPScatterLabel *minXLabel = [self.dataSource minimumXLabel:self];
         UIFont *font = [self getAdjustedFont:minXLabel rect:rect];
-        CGPoint point = CGPointMake(CGRectGetMinX(rect) + kPadding, CGRectGetMinY(rect));
+        CGPoint point = CGPointMake(CGRectGetMinX(rect) + HYPScatterPlotPadding, CGRectGetMinY(rect));
         [self drawTextFor:context rect:rect label:minXLabel font:font alignment:NSTextAlignmentLeft point:point];
     }
 
     if ([self.dataSource respondsToSelector:@selector(maximumXLabel:)]) {
         HYPScatterLabel *maxXLabel = [self.dataSource maximumXLabel:self];
         UIFont *font = [self getAdjustedFont:maxXLabel rect:rect];
-        CGPoint point = CGPointMake(CGRectGetMaxX(rect) - CGRectGetMinX(rect) - kPadding, CGRectGetMinY(rect));
+        CGPoint point = CGPointMake(CGRectGetMaxX(rect) - CGRectGetMinX(rect) - HYPScatterPlotPadding, CGRectGetMinY(rect));
         [self drawTextFor:context rect:rect label:maxXLabel font:font alignment:NSTextAlignmentRight point:point];
     }
 }
@@ -256,7 +256,7 @@ static NSString * const HYPScatterPlotXLineColor = @"EC3031";
         CGFloat y = (point.y + translateYBy) / (maxVertical.y + translateYBy) * self.graphHeight + CGRectGetMinY(rect);
 
         //draw the point as circle
-        CGRect rect = CGRectMake(x-kCircleRadius, y-kCircleRadius, 2*kCircleRadius, 2*kCircleRadius);
+        CGRect rect = CGRectMake(x - HYPScatterPlotCircleRadius, y - HYPScatterPlotCircleRadius, 2 * HYPScatterPlotCircleRadius, 2 * HYPScatterPlotCircleRadius);
         CGContextSetStrokeColorWithColor(context, point.strokeColor.CGColor);
         CGContextSetFillColorWithColor(context, point.fillColor.CGColor);
         CGContextAddEllipseInRect(context, rect);
