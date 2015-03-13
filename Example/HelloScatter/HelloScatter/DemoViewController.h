@@ -1,7 +1,5 @@
 @import UIKit;
 
-#import "HYPScatterPlot.h"
-
-@interface DemoViewController : UIViewController <HYPScatterPlotDatasource>
+@interface DemoViewController : UIViewController
 
 @end

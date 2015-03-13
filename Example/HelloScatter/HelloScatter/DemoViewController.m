@@ -1,10 +1,12 @@
 #import "DemoViewController.h"
+
 #import "HYPScatterPoint.h"
 #import "HYPScatterLabel.h"
+#import "HYPScatterPlot.h"
 
 #import "UIColor+Hex.h"
 
-@interface DemoViewController ()
+@interface DemoViewController () <HYPScatterPlotDataSource>
 
 @property (nonatomic, weak) IBOutlet UIView *uiView;
 @property (nonatomic) HYPScatterPlot *scatterPlot;
@@ -52,14 +54,14 @@
     if (_scatterPlot) return _scatterPlot;
 
     _scatterPlot = [[HYPScatterPlot alloc] initWithFrame:self.view.bounds];
-    _scatterPlot.delegate = self;
+    _scatterPlot.dataSource = self;
 
     return _scatterPlot;
 }
 
 #pragma mark HYPScatterPlotDatasource
 
-- (NSArray *)pointForScatterPlot:(HYPScatterPlot *)scatterPlot
+- (NSArray *)scatterPointsForScatterPlot:(HYPScatterPlot *)scatterPlot
 {
     return self.scatterPoints;
 }
@@ -106,7 +108,7 @@
     return minimumY;
 }
 
-- (CGFloat)avgYValue:(HYPScatterPlot *)scatterPlot
+- (CGFloat)averageYValue:(HYPScatterPlot *)scatterPlot
 {
     __block CGFloat sum = 0.0;
     __block CGFloat count = 0;
@@ -122,27 +124,27 @@
 
 - (HYPScatterLabel *)minimumYLabel:(HYPScatterPlot *)scatterPlot
 {
-    return [[HYPScatterLabel alloc] initWithText:@"- 5,4%" textColor:[UIColor whiteColor] font:[UIFont systemFontOfSize:22] autosize:YES];
+    return [[HYPScatterLabel alloc] initWithText:@"- 5,4%" textColor:[UIColor whiteColor] font:[UIFont systemFontOfSize:22] autoSizeText:YES];
 }
 
 - (HYPScatterLabel *)maximumYLabel:(HYPScatterPlot *)scatterPlot
 {
-    return [[HYPScatterLabel alloc] initWithText:@"+ 7,2%" textColor:[UIColor redColor] font:[UIFont systemFontOfSize:22] autosize:YES];
+    return [[HYPScatterLabel alloc] initWithText:@"+ 7,2%" textColor:[UIColor redColor] font:[UIFont systemFontOfSize:22] autoSizeText:YES];
 }
 
 - (HYPScatterLabel *)minimumXLabel:(HYPScatterPlot *)scatterPlot
 {
-    return [[HYPScatterLabel alloc] initWithText:@"19,0" textColor:[UIColor redColor] font:[UIFont systemFontOfSize:22] autosize:YES];
+    return [[HYPScatterLabel alloc] initWithText:@"19,0" textColor:[UIColor redColor] font:[UIFont systemFontOfSize:22] autoSizeText:YES];
 }
 
 - (HYPScatterLabel *)maximumXLabel:(HYPScatterPlot *)scatterPlot
 {
-    return [[HYPScatterLabel alloc] initWithText:@"35,5 mill" textColor:[UIColor whiteColor] font:[UIFont systemFontOfSize:22] autosize:YES];
+    return [[HYPScatterLabel alloc] initWithText:@"35,5 mill" textColor:[UIColor whiteColor] font:[UIFont systemFontOfSize:22] autoSizeText:YES];
 }
 
-- (HYPScatterLabel *)avgLabel:(HYPScatterPlot *)scatterPlot
+- (HYPScatterLabel *)averageLabel:(HYPScatterPlot *)scatterPlot
 {
-    return [[HYPScatterLabel alloc] initWithText:@"+1,3%" textColor:[UIColor whiteColor] font:[UIFont systemFontOfSize:22] autosize:YES];
+    return [[HYPScatterLabel alloc] initWithText:@"+1,3%" textColor:[UIColor whiteColor] font:[UIFont systemFontOfSize:22] autoSizeText:YES];
 }
 
 @end
