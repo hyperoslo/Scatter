@@ -20,6 +20,10 @@
 
 @required
 
+/**
+ 
+ @return should be a list of HYPScatterPoint objects
+ */
 - (NSArray *)scatterPointsForScatterPlot:(HYPScatterPlot *)scatterPlot;
 - (HYPScatterPoint *)maximumXValue:(HYPScatterPlot *)scatterPlot;
 - (HYPScatterPoint *)minimumXValue:(HYPScatterPlot *)scatterPlot;
