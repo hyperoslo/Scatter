@@ -5,7 +5,7 @@
 [![License](https://img.shields.io/cocoapods/l/Scatter.svg?style=flat)](http://cocoadocs.org/docsets/Scatter)
 [![Platform](https://img.shields.io/cocoapods/p/Scatter.svg?style=flat)](http://cocoadocs.org/docsets/Scatter)
 
-![Scatter](https://raw.githubusercontent.com/hyperoslo/Scatter/master/Images/cover.png)
+![Scatter](https://raw.githubusercontent.com/hyperoslo/Scatter/master/Images/cover-v2.png)
 
 ## Usage
 
