@@ -1,4 +1,4 @@
-![Scatter](https://raw.githubusercontent.com/hyperoslo/Scatter/master/Images/logo-v3.png)
+![Scatter](https://raw.githubusercontent.com/hyperoslo/Scatter/master/Images/logo-v4.png)
 
 [![CI Status](http://img.shields.io/travis/hyperoslo/Scatter.svg?style=flat)](https://travis-ci.org/hyperoslo/Scatter)
 [![Version](https://img.shields.io/cocoapods/v/Scatter.svg?style=flat)](http://cocoadocs.org/docsets/Scatter)
