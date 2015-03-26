@@ -23,6 +23,8 @@ static NSString * const HYPScatterPlotXLineColor = @"EC3031";
 @property (nonatomic) UILabel *maximumYLabel;
 @property (nonatomic) UILabel *averageYLabel;
 
+@property (nonatomic) UIView *leftYAxis;
+@property (nonatomic) UIView *rightYAxis;
 @property (nonatomic) CAGradientLayer *leftYAxisGradient;
 @property (nonatomic) CAGradientLayer *rightYAxisGradient;
 
@@ -37,43 +39,11 @@ static NSString * const HYPScatterPlotXLineColor = @"EC3031";
 
     self.backgroundColor = [UIColor colorFromHex:HYPScatterPlotBackgroundColor];
 
-    self.averageLineColor = [UIColor whiteColor];
-    self.xAxisColor = [UIColor colorFromHex:HYPScatterPlotXLineColor];
-    self.yAxisMidGradient = [UIColor whiteColor];
-    self.yAxisEndGradient = [UIColor clearColor];
-    self.defaultPointFillColor = [UIColor whiteColor];
-    self.selectedPointFillColor = [UIColor lightGrayColor];
-    self.selectedPointStrokeColor = [UIColor whiteColor];
     self.axisLineWidth = HYPScatterPlotAxisLineWidth;
     self.pointRadius = HYPScatterPlotCircleRadius;
 
-    UIView *leftYAxis = [UIView new];
-    leftYAxis.translatesAutoresizingMaskIntoConstraints = NO;
-    self.leftYAxisGradient = [CAGradientLayer layer];
-    [leftYAxis.layer addSublayer:self.leftYAxisGradient];
-
-    UIView *rightYAxis = [UIView new];
-    rightYAxis.translatesAutoresizingMaskIntoConstraints = NO;
-    self.rightYAxisGradient = [CAGradientLayer layer];
-    [rightYAxis.layer addSublayer:self.rightYAxisGradient];
-
-    self.minimumXLabel = [UILabel new];
-    self.minimumXLabel.translatesAutoresizingMaskIntoConstraints = NO;
-
-    self.maximumXLabel = [UILabel new];
-    self.maximumXLabel.translatesAutoresizingMaskIntoConstraints = NO;
-
-    self.minimumYLabel = [UILabel new];
-    self.minimumYLabel.translatesAutoresizingMaskIntoConstraints = NO;
-
-    self.maximumYLabel = [UILabel new];
-    self.maximumYLabel.translatesAutoresizingMaskIntoConstraints = NO;
-
-    self.averageYLabel = [UILabel new];
-    self.averageYLabel.translatesAutoresizingMaskIntoConstraints = NO;
-
-    [self addSubview:leftYAxis];
-    [self addSubview:rightYAxis];
+    [self addSubview:self.leftYAxis];
+    [self addSubview:self.rightYAxis];
     [self addSubview:self.minimumXLabel];
     [self addSubview:self.maximumXLabel];
     [self addSubview:self.minimumYLabel];
@@ -85,8 +55,8 @@ static NSString * const HYPScatterPlotXLineColor = @"EC3031";
                               @"rightYAxisMarginRight" : @(HYPScatterPlotRightYAxisMarginRight),
                               @"padding": @(HYPScatterPlotLabelPadding)};
 
-    NSDictionary *views   = @{@"leftYAxis": leftYAxis,
-                              @"rightYAxis": rightYAxis,
+    NSDictionary *views   = @{@"leftYAxis": self.leftYAxis,
+                              @"rightYAxis": self.rightYAxis,
                               @"minimumXLabel": self.minimumXLabel,
                               @"maximumXLabel": self.maximumXLabel,
                               @"minimumYLabel": self.minimumYLabel,
@@ -189,6 +159,169 @@ static NSString * const HYPScatterPlotXLineColor = @"EC3031";
     return self;
 }
 
+#pragma mark - Getters
+
+- (UIColor *)averageLineColor
+{
+    if (_averageLineColor) return _averageLineColor;
+
+    _averageLineColor = [UIColor whiteColor];
+
+    return _averageLineColor;
+}
+
+- (UIColor *)xAxisColor
+{
+    if (_xAxisColor) return _xAxisColor;
+
+    _xAxisColor = [UIColor colorFromHex:HYPScatterPlotXLineColor];
+
+    return _xAxisColor;
+}
+
+- (UIColor *)yAxisMidGradient
+{
+    if (_yAxisMidGradient) return _yAxisMidGradient;
+
+    _yAxisMidGradient = [UIColor whiteColor];
+
+    return _yAxisMidGradient;
+}
+
+- (UIColor *)yAxisEndGradient
+{
+    if (_yAxisEndGradient) return _yAxisEndGradient;
+
+    _yAxisEndGradient = [UIColor clearColor];
+
+    return _yAxisEndGradient;
+}
+
+- (UIColor *)defaultPointFillColor
+{
+    if (_defaultPointFillColor) return _defaultPointFillColor;
+
+    _defaultPointFillColor = [UIColor whiteColor];
+
+    return _defaultPointFillColor;
+}
+
+- (UIColor *)selectedPointFillColor
+{
+    if (_selectedPointFillColor) return _selectedPointFillColor;
+
+    _selectedPointFillColor = [UIColor whiteColor];
+
+    return _selectedPointFillColor;
+}
+
+- (UIColor *)selectedPointStrokeColor
+{
+    if (_selectedPointStrokeColor) return _selectedPointStrokeColor;
+
+    _selectedPointStrokeColor = [UIColor whiteColor];
+
+    return _selectedPointStrokeColor;
+}
+
+- (UIView *)leftYAxis
+{
+    if (_leftYAxis) return _leftYAxis;
+
+    _leftYAxis = [UIView new];
+    _leftYAxis.translatesAutoresizingMaskIntoConstraints = NO;
+    [_leftYAxis.layer addSublayer:self.leftYAxisGradient];
+
+    return _leftYAxis;
+}
+
+- (UIView *)rightYAxis
+{
+    if (_rightYAxis) return _rightYAxis;
+
+    _rightYAxis = [UIView new];
+    _rightYAxis.translatesAutoresizingMaskIntoConstraints = NO;
+    [_rightYAxis.layer addSublayer:self.rightYAxisGradient];
+
+    return _rightYAxis;
+}
+
+- (CAGradientLayer *)leftYAxisGradient
+{
+    if (_leftYAxisGradient) return _leftYAxisGradient;
+
+    _leftYAxisGradient = [CAGradientLayer layer];
+
+    return _leftYAxisGradient;
+}
+
+- (CAGradientLayer *)rightYAxisGradient
+{
+    if (_rightYAxisGradient) return _rightYAxisGradient;
+
+    _rightYAxisGradient = [CAGradientLayer layer];
+
+    return _rightYAxisGradient;
+}
+
+- (UILabel *)minimumXLabel
+{
+    if (_minimumXLabel) return _minimumXLabel;
+
+    _minimumXLabel = [UILabel new];
+    _minimumXLabel.translatesAutoresizingMaskIntoConstraints = NO;
+
+    return _minimumXLabel;
+}
+
+- (UILabel *)maximumXLabel
+{
+    if (_maximumXLabel) return _maximumXLabel;
+
+    _maximumXLabel = [UILabel new];
+    _maximumXLabel.translatesAutoresizingMaskIntoConstraints = NO;
+
+    return _maximumXLabel;
+}
+
+- (UILabel *)minimumYLabel
+{
+    if (_minimumYLabel) return _minimumYLabel;
+
+    _minimumYLabel = [UILabel new];
+    _minimumYLabel.translatesAutoresizingMaskIntoConstraints = NO;
+
+    return _minimumYLabel;
+}
+
+- (UILabel *)maximumYLabel
+{
+    if (_maximumYLabel) return _maximumYLabel;
+
+    _maximumYLabel = [UILabel new];
+    _maximumYLabel.translatesAutoresizingMaskIntoConstraints = NO;
+
+    return _maximumYLabel;
+}
+
+- (UILabel *)averageYLabel
+{
+    if (_averageYLabel) return _averageYLabel;
+
+    _averageYLabel = [UILabel new];
+    _averageYLabel.translatesAutoresizingMaskIntoConstraints = NO;
+
+    return _averageYLabel;
+}
+
+- (NSArray *)gradientColors
+{
+    return [NSArray arrayWithObjects:
+            (id)self.yAxisEndGradient.CGColor,
+            (id)self.yAxisMidGradient.CGColor,
+            (id)self.yAxisEndGradient.CGColor, nil];
+}
+
 - (void)drawRect:(CGRect)rect
 {
     CGFloat marginY = HYPScatterPlotCircleRadius + 1.0f;
@@ -202,14 +335,6 @@ static NSString * const HYPScatterPlotXLineColor = @"EC3031";
     [self updateYAxes];
     [self updateLabels];
     [self drawPointsInRect:drawInRect];
-}
-
-- (NSArray *)gradientColors
-{
-    return [NSArray arrayWithObjects:
-            (id)self.yAxisEndGradient.CGColor,
-            (id)self.yAxisMidGradient.CGColor,
-            (id)self.yAxisEndGradient.CGColor, nil];
 }
 
 - (void)updateLabels
