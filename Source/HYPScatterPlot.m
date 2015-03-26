@@ -21,7 +21,14 @@ static NSString * const HYPScatterPlotXLineColor = @"EC3031";
 @property (nonatomic) UILabel *maximumXLabel;
 @property (nonatomic) UILabel *minimumYLabel;
 @property (nonatomic) UILabel *maximumYLabel;
+
 @property (nonatomic) UILabel *averageYLabel;
+@property (nonatomic) UILabel *upperThresholdYLabel;
+@property (nonatomic) UILabel *lowerThresholdYLabel;
+
+@property (nonatomic) NSLayoutConstraint *averageYLabelBottomMarginConstraint;
+@property (nonatomic) NSLayoutConstraint *upperThresholdYLabelBottomMarginConstraint;
+@property (nonatomic) NSLayoutConstraint *lowerThresholdYLabelBottomMarginConstraint;
 
 @property (nonatomic) UIView *leftYAxis;
 @property (nonatomic) UIView *rightYAxis;
@@ -49,6 +56,8 @@ static NSString * const HYPScatterPlotXLineColor = @"EC3031";
     [self addSubview:self.minimumYLabel];
     [self addSubview:self.maximumYLabel];
     [self addSubview:self.averageYLabel];
+    [self addSubview:self.upperThresholdYLabel];
+    [self addSubview:self.lowerThresholdYLabel];
 
     NSDictionary *metrics = @{@"yAxisWidth": @(HYPScatterPlotYAxisWidth),
                               @"leftYAxisMarginLeft": @(HYPScatterPlotLeftYAxisMarginLeft),
@@ -61,7 +70,9 @@ static NSString * const HYPScatterPlotXLineColor = @"EC3031";
                               @"maximumXLabel": self.maximumXLabel,
                               @"minimumYLabel": self.minimumYLabel,
                               @"maximumYLabel": self.maximumYLabel,
-                              @"averageYLabel": self.averageYLabel};
+                              @"averageYLabel": self.averageYLabel,
+                              @"upperThresholdYLabel": self.upperThresholdYLabel,
+                              @"lowerThresholdYLabel": self.lowerThresholdYLabel};
 
     [self addConstraints:
      [NSLayoutConstraint constraintsWithVisualFormat:@"H:|-leftYAxisMarginLeft-[leftYAxis(yAxisWidth)]"
@@ -147,36 +158,52 @@ static NSString * const HYPScatterPlotXLineColor = @"EC3031";
                                              metrics:metrics
                                                views:views]];
 
-    [self addConstraint:
-     [NSLayoutConstraint constraintWithItem:self.averageYLabel
-                                  attribute:NSLayoutAttributeCenterY
-                                  relatedBy:NSLayoutRelationEqual
-                                     toItem:self
-                                  attribute:NSLayoutAttributeCenterY
-                                 multiplier:1.0f
-                                   constant:-10.0f]];
+    [self addConstraints:
+     [NSLayoutConstraint constraintsWithVisualFormat:@"H:[upperThresholdYLabel]-padding-|"
+                                             options:0
+                                             metrics:metrics
+                                               views:views]];
+
+    [self addConstraints:
+     [NSLayoutConstraint constraintsWithVisualFormat:@"H:[lowerThresholdYLabel]-padding-|"
+                                             options:0
+                                             metrics:metrics
+                                               views:views]];
+
+    [self addConstraint:self.averageYLabelBottomMarginConstraint];
+    [self addConstraint:self.upperThresholdYLabelBottomMarginConstraint];
+    [self addConstraint:self.lowerThresholdYLabelBottomMarginConstraint];
 
     return self;
 }
 
 #pragma mark - Getters
 
-- (UIColor *)averageLineColor
+- (UIColor *)averageYLineColor
 {
-    if (_averageLineColor) return _averageLineColor;
+    if (_averageYLineColor) return _averageYLineColor;
 
-    _averageLineColor = [UIColor whiteColor];
+    _averageYLineColor = [UIColor whiteColor];
 
-    return _averageLineColor;
+    return _averageYLineColor;
 }
 
-- (UIColor *)xAxisColor
+- (UIColor *)upperThresholdYLineColor
 {
-    if (_xAxisColor) return _xAxisColor;
+    if (_upperThresholdYLineColor) return _upperThresholdYLineColor;
 
-    _xAxisColor = [UIColor colorFromHex:HYPScatterPlotXLineColor];
+    _upperThresholdYLineColor = [UIColor greenColor];
 
-    return _xAxisColor;
+    return _upperThresholdYLineColor;
+}
+
+- (UIColor *)lowerThresholdYLineColor
+{
+    if (_lowerThresholdYLineColor) return _lowerThresholdYLineColor;
+
+    _lowerThresholdYLineColor = [UIColor redColor];
+
+    return _lowerThresholdYLineColor;
 }
 
 - (UIColor *)yAxisMidGradient
@@ -314,6 +341,74 @@ static NSString * const HYPScatterPlotXLineColor = @"EC3031";
     return _averageYLabel;
 }
 
+- (UILabel *)upperThresholdYLabel
+{
+    if (_upperThresholdYLabel) return _upperThresholdYLabel;
+
+    _upperThresholdYLabel = [UILabel new];
+    _upperThresholdYLabel.translatesAutoresizingMaskIntoConstraints = NO;
+
+    return _upperThresholdYLabel;
+}
+
+- (UILabel *)lowerThresholdYLabel
+{
+    if (_lowerThresholdYLabel) return _lowerThresholdYLabel;
+
+    _lowerThresholdYLabel = [UILabel new];
+    _lowerThresholdYLabel.translatesAutoresizingMaskIntoConstraints = NO;
+
+    return _lowerThresholdYLabel;
+}
+
+- (NSLayoutConstraint *)averageYLabelBottomMarginConstraint
+{
+    if (_averageYLabelBottomMarginConstraint) return _averageYLabelBottomMarginConstraint;
+
+    _averageYLabelBottomMarginConstraint =
+    [NSLayoutConstraint constraintWithItem:self
+                                 attribute:NSLayoutAttributeBottom
+                                 relatedBy:NSLayoutRelationEqual
+                                    toItem:self.averageYLabel
+                                 attribute:NSLayoutAttributeBottom
+                                multiplier:1.0f
+                                  constant:0.0f];
+
+    return _averageYLabelBottomMarginConstraint;
+}
+
+- (NSLayoutConstraint *)upperThresholdYLabelBottomMarginConstraint
+{
+    if (_upperThresholdYLabelBottomMarginConstraint) return _upperThresholdYLabelBottomMarginConstraint;
+
+    _upperThresholdYLabelBottomMarginConstraint =
+    [NSLayoutConstraint constraintWithItem:self
+                                 attribute:NSLayoutAttributeBottom
+                                 relatedBy:NSLayoutRelationEqual
+                                    toItem:self.upperThresholdYLabel
+                                 attribute:NSLayoutAttributeBottom
+                                multiplier:1.0f
+                                  constant:0.0f];
+
+    return _upperThresholdYLabelBottomMarginConstraint;
+}
+
+- (NSLayoutConstraint *)lowerThresholdYLabelBottomMarginConstraint
+{
+    if (_lowerThresholdYLabelBottomMarginConstraint) return _lowerThresholdYLabelBottomMarginConstraint;
+
+    _lowerThresholdYLabelBottomMarginConstraint =
+    [NSLayoutConstraint constraintWithItem:self
+                                 attribute:NSLayoutAttributeBottom
+                                 relatedBy:NSLayoutRelationEqual
+                                    toItem:self.lowerThresholdYLabel
+                                 attribute:NSLayoutAttributeBottom
+                                multiplier:1.0f
+                                  constant:0.0f];
+
+    return _lowerThresholdYLabelBottomMarginConstraint;
+}
+
 - (NSArray *)gradientColors
 {
     return [NSArray arrayWithObjects:
@@ -327,7 +422,7 @@ static NSString * const HYPScatterPlotXLineColor = @"EC3031";
     CGFloat marginY = HYPScatterPlotCircleRadius + 1.0f;
     CGFloat marginX = HYPScatterPlotLeftYAxisMarginLeft + 0.5f;
 
-    CGRect drawInRect = CGRectMake(marginX, marginY, CGRectGetWidth(rect) - (2 * marginX), CGRectGetHeight(rect) - (2 * marginY));
+    CGRect drawInRect = CGRectMake(marginX, marginY, CGRectGetWidth(rect) - marginX - marginY, CGRectGetHeight(rect) - (2 * marginY));
 
     self.graphWidth = CGRectGetWidth(drawInRect);
     self.graphHeight = CGRectGetHeight(drawInRect);
@@ -347,6 +442,14 @@ static NSString * const HYPScatterPlotXLineColor = @"EC3031";
     if ([self.dataSource respondsToSelector:@selector(averageYValueFormattedInScatterPlotView:)]) {
         self.averageYLabel.attributedText = [self.dataSource averageYValueFormattedInScatterPlotView:self];
     }
+
+    if ([self.dataSource respondsToSelector:@selector(upperThresholdYValueFormattedInScatterPlotView:)]) {
+        self.upperThresholdYLabel.attributedText = [self.dataSource upperThresholdYValueFormattedInScatterPlotView:self];
+    }
+
+    if ([self.dataSource respondsToSelector:@selector(lowerThresholdYValueFormattedInScatterPlotView:)]) {
+        self.lowerThresholdYLabel.attributedText = [self.dataSource lowerThresholdYValueFormattedInScatterPlotView:self];
+    }
 }
 
 - (void)updateYAxes
@@ -356,6 +459,30 @@ static NSString * const HYPScatterPlotXLineColor = @"EC3031";
 
     self.rightYAxisGradient.frame = CGRectMake(0, HYPScatterPlotLabelPadding, HYPScatterPlotYAxisWidth, CGRectGetHeight(self.bounds)-HYPScatterPlotLabelPadding);
     self.rightYAxisGradient.colors = self.gradientColors;
+}
+
+- (void)drawLineWithYValue:(CGFloat)yValue usingColor:(UIColor *)color dashedStyle:(BOOL)dashed
+{
+    CGContextRef context = UIGraphicsGetCurrentContext();
+
+    CGContextSetLineWidth(context, self.axisLineWidth);
+    CGContextSetStrokeColorWithColor(context, color.CGColor);
+
+    if (dashed) {
+        CGFloat dash[] = {6.0, 6.0};
+        CGContextSetLineDash(context, 0.0, dash, 2);
+    }
+
+    CGFloat yCoordinate = self.graphHeight - yValue;
+
+    CGContextMoveToPoint(context, 0, yCoordinate);
+    CGContextAddLineToPoint(context, self.bounds.size.width, yCoordinate);
+
+    CGContextStrokePath(context);
+
+    if (dashed) {
+        CGContextSetLineDash(context, 0, NULL, 0);
+    }
 }
 
 - (void)drawPointsInRect:(CGRect)rect
@@ -383,35 +510,29 @@ static NSString * const HYPScatterPlotXLineColor = @"EC3031";
 
     CGContextRef context = UIGraphicsGetCurrentContext();
 
-    // draw a horizontal line where y = 0
-    CGContextSetLineWidth(context, self.axisLineWidth);
-    CGContextSetStrokeColorWithColor(context, self.xAxisColor.CGColor);
+    // draw a horizontal line on upper threshold of y
+    if ([self.dataSource respondsToSelector:@selector(upperThresholdYValueInScatterPlotView:)]) {
+        CGFloat upperThresholdV = [self.dataSource upperThresholdYValueInScatterPlotView:self];
+        CGFloat translatedUpperThresholdV = (upperThresholdV / (maximumYValue + minimumYValue)) * self.graphHeight + CGRectGetMinY(rect);
+        self.upperThresholdYLabelBottomMarginConstraint.constant = translatedUpperThresholdV;
+        [self drawLineWithYValue:translatedUpperThresholdV usingColor:self.upperThresholdYLineColor dashedStyle:NO];
+    }
 
-    // through out the following code CGRectGetMinY and CGRectGetMinX help us get the margins for the drawing
-    // normalized co-ordinate of the horizontal line indicating where is y = 0
-    CGFloat zeroLine = self.graphHeight - ((minimumYValue + minimumYValue) / (maximumYValue + minimumYValue)) * self.graphHeight + CGRectGetMinY(rect);
-
-    CGContextMoveToPoint(context, 0, zeroLine);
-    CGContextAddLineToPoint(context, self.bounds.size.width, zeroLine);
-
-    CGContextStrokePath(context);
+    // draw a horizontal line on lower threshold of y
+    if ([self.dataSource respondsToSelector:@selector(lowerThresholdYValueInScatterPlotView:)]) {
+        CGFloat lowerThresholdV = [self.dataSource lowerThresholdYValueInScatterPlotView:self];
+        
+        CGFloat translatedLowerThreasholdV = (lowerThresholdV / (maximumYValue + minimumYValue)) * self.graphHeight + CGRectGetMinY(rect);
+        self.lowerThresholdYLabelBottomMarginConstraint.constant = translatedLowerThreasholdV;
+        [self drawLineWithYValue:translatedLowerThreasholdV usingColor:self.lowerThresholdYLineColor dashedStyle:NO];
+    }
 
     // draw a horizontal line on average value of y
     if ([self.dataSource respondsToSelector:@selector(averageYValueInScatterPlotView:)]) {
         CGFloat averageVertical = [self.dataSource averageYValueInScatterPlotView:self];
-
-        CGContextSetLineWidth(context, self.axisLineWidth);
-        CGContextSetStrokeColorWithColor(context, self.averageLineColor.CGColor);
-        CGFloat dash[] = {6.0, 6.0};
-        CGContextSetLineDash(context, 0.0, dash, 2);
-
-        // normalization is done by dividing a value by maximum value in the list, see below inside for loop
-        CGFloat averageLine = (averageVertical + minimumYValue) / (maximumYValue + minimumYValue) * self.graphHeight + CGRectGetMinY(rect);
-
-        CGContextMoveToPoint(context, 0, averageLine);
-        CGContextAddLineToPoint(context, self.bounds.size.width, averageLine);
-        CGContextStrokePath(context);
-        CGContextSetLineDash(context, 0, NULL, 0);  //remove the dash
+        CGFloat translatedAverageVertical = (averageVertical / (maximumYValue + minimumYValue)) * self.graphHeight + CGRectGetMinY(rect);
+        self.averageYLabelBottomMarginConstraint.constant = translatedAverageVertical;
+        [self drawLineWithYValue:translatedAverageVertical usingColor:self.averageYLineColor dashedStyle:YES];
     }
 
     for (NSInteger index = 0; index < numberOfPoints; index++) {
@@ -425,7 +546,6 @@ static NSString * const HYPScatterPlotXLineColor = @"EC3031";
         }
 
         CGFloat x = (point.x + minimumXValue) / (maximumXValue + minimumXValue) * self.graphWidth + CGRectGetMinX(rect);
-
         CGFloat y = self.graphHeight - (point.y + minimumYValue) / (maximumYValue + minimumYValue) * self.graphHeight + CGRectGetMinY(rect);
 
         // draw the point as circle

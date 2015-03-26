@@ -9,14 +9,17 @@
 
 @property (nonatomic, weak) id<HYPScatterPlotDataSource> dataSource;
 
-//  optional properties
-@property (nonatomic) UIColor *averageLineColor;
-@property (nonatomic) UIColor *xAxisColor;
+@property (nonatomic) UIColor *averageYLineColor;
+@property (nonatomic) UIColor *upperThresholdYLineColor;
+@property (nonatomic) UIColor *lowerThresholdYLineColor;
+
 @property (nonatomic) UIColor *yAxisMidGradient;
 @property (nonatomic) UIColor *yAxisEndGradient;
+
 @property (nonatomic) UIColor *defaultPointFillColor;
 @property (nonatomic) UIColor *selectedPointFillColor;
 @property (nonatomic) UIColor *selectedPointStrokeColor;
+
 @property (nonatomic) CGFloat axisLineWidth;
 @property (nonatomic) CGFloat pointRadius;
 
@@ -42,7 +45,13 @@
 @optional
 
 - (CGFloat)averageYValueInScatterPlotView:(HYPScatterPlot *)scatterPlotView;
+- (CGFloat)upperThresholdYValueInScatterPlotView:(HYPScatterPlot *)scatterPlotView;
+- (CGFloat)lowerThresholdYValueInScatterPlotView:(HYPScatterPlot *)scatterPlotView;
+
 - (NSAttributedString *)averageYValueFormattedInScatterPlotView:(HYPScatterPlot *)scatterPlotView;
+- (NSAttributedString *)upperThresholdYValueFormattedInScatterPlotView:(HYPScatterPlot *)scatterPlotView;
+- (NSAttributedString *)lowerThresholdYValueFormattedInScatterPlotView:(HYPScatterPlot *)scatterPlotView;
+
 - (UIColor *)fillColorOfPointAtIndex:(NSUInteger)index;
 
 @end
