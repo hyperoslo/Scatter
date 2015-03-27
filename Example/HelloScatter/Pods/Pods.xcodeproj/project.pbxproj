@@ -10,8 +10,6 @@
 		0561F2C30BBB8FF58D408BA4 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FD234FB7730A4143DCD49DD7 /* Foundation.framework */; };
 		115A91D009D521FDF347031E /* HYPScatterPlot.h in Headers */ = {isa = PBXBuildFile; fileRef = ADC1E492F2A73C53CA56BA87 /* HYPScatterPlot.h */; };
 		2DC9476EFADAD08EA8271275 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = EC733398058008C76E85FA29 /* UIKit.framework */; };
-		4562A56700B22CCB19F24C7B /* HYPScatterPoint.h in Headers */ = {isa = PBXBuildFile; fileRef = 404EEEACEB8122866EAA1B02 /* HYPScatterPoint.h */; };
-		4EBC7D14500F487C2C9A4CA5 /* HYPScatterPoint.m in Sources */ = {isa = PBXBuildFile; fileRef = 71310CD2E6BC4CEB0C7F3562 /* HYPScatterPoint.m */; };
 		58F0E8E34B3F481D37EA35A1 /* HYPScatterPlot.m in Sources */ = {isa = PBXBuildFile; fileRef = 2B5F376543780F8D60C5DD36 /* HYPScatterPlot.m */; };
 		85DED82830E2403AB8F6787F /* Pods-Hex-dummy.m in Sources */ = {isa = PBXBuildFile; fileRef = 39121448616971F932C45779 /* Pods-Hex-dummy.m */; };
 		9321C058539C56E9FC12DEE9 /* UIColor+Hex.h in Headers */ = {isa = PBXBuildFile; fileRef = 88240D3C31531FCCAF7E1A66 /* UIColor+Hex.h */; };
@@ -20,9 +18,7 @@
 		CBBF65E039457635E94401C3 /* UIColor+Hex.m in Sources */ = {isa = PBXBuildFile; fileRef = F251709CA4C8C6C578CD831E /* UIColor+Hex.m */; };
 		CF87BBCD883C7409032BEE38 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FD234FB7730A4143DCD49DD7 /* Foundation.framework */; };
 		DB80D3A6FB2F74CF415161E2 /* Pods-Scatter-dummy.m in Sources */ = {isa = PBXBuildFile; fileRef = E28EFD844BD9BD5479AB9458 /* Pods-Scatter-dummy.m */; };
-		DF30BCE5952DE9E25F9B1BD5 /* HYPScatterLabel.h in Headers */ = {isa = PBXBuildFile; fileRef = CE21994F7C16C0F636FD8E32 /* HYPScatterLabel.h */; };
 		EE6E59728C1BEDBD3FCE7F66 /* CoreText.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 6AB776F8218B7DD30BBC2874 /* CoreText.framework */; };
-		EFA6BF30625C8D4CF2AD7FE9 /* HYPScatterLabel.m in Sources */ = {isa = PBXBuildFile; fileRef = FAD9A41B43B801FE776EDD99 /* HYPScatterLabel.m */; };
 		F4F5B98312C7BF245384E283 /* Pods-dummy.m in Sources */ = {isa = PBXBuildFile; fileRef = F8FD61640B8FC68540FDD4C9 /* Pods-dummy.m */; };
 /* End PBXBuildFile section */
 
@@ -57,19 +53,16 @@
 		318E05FED15A83E609CCEB20 /* Pods-Hex-prefix.pch */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = "Pods-Hex-prefix.pch"; sourceTree = "<group>"; };
 		38ED50AE4A85258979312781 /* Pods-acknowledgements.plist */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.plist.xml; path = "Pods-acknowledgements.plist"; sourceTree = "<group>"; };
 		39121448616971F932C45779 /* Pods-Hex-dummy.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; path = "Pods-Hex-dummy.m"; sourceTree = "<group>"; };
-		404EEEACEB8122866EAA1B02 /* HYPScatterPoint.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = HYPScatterPoint.h; sourceTree = "<group>"; };
 		47D128B5AD5999197C55410E /* libPods.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libPods.a; sourceTree = BUILT_PRODUCTS_DIR; };
 		655CC780796408727870622A /* Pods-resources.sh */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.script.sh; path = "Pods-resources.sh"; sourceTree = "<group>"; };
 		6736D635719640AF338EE4B0 /* Pods-environment.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = "Pods-environment.h"; sourceTree = "<group>"; };
 		6AB776F8218B7DD30BBC2874 /* CoreText.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreText.framework; path = Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS7.1.sdk/System/Library/Frameworks/CoreText.framework; sourceTree = DEVELOPER_DIR; };
-		71310CD2E6BC4CEB0C7F3562 /* HYPScatterPoint.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; path = HYPScatterPoint.m; sourceTree = "<group>"; };
 		71734469F6C1CEE5B3C5B435 /* libPods-Scatter.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-Scatter.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		76CCF1F08625D86FE70B3C0F /* libPods-Hex.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-Hex.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		79A9F94B7E5E0CBF68E86385 /* Pods-Scatter-prefix.pch */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = "Pods-Scatter-prefix.pch"; sourceTree = "<group>"; };
 		88240D3C31531FCCAF7E1A66 /* UIColor+Hex.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = "UIColor+Hex.h"; path = "Hex/UIColor+Hex.h"; sourceTree = "<group>"; };
 		ADC1E492F2A73C53CA56BA87 /* HYPScatterPlot.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = HYPScatterPlot.h; sourceTree = "<group>"; };
 		CD444945D06C162F35E90CD3 /* Pods-Scatter-Private.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; path = "Pods-Scatter-Private.xcconfig"; sourceTree = "<group>"; };
-		CE21994F7C16C0F636FD8E32 /* HYPScatterLabel.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = HYPScatterLabel.h; sourceTree = "<group>"; };
 		D1CB0FCE9C78ADA979C6041D /* Podfile */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text; name = Podfile; path = ../Podfile; sourceTree = SOURCE_ROOT; xcLanguageSpecificationIdentifier = xcode.lang.ruby; };
 		D73E71D3067021FA12CBC3FB /* Pods.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; path = Pods.debug.xcconfig; sourceTree = "<group>"; };
 		DA856AC469BB2C2E2B87F7F2 /* Pods.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; path = Pods.release.xcconfig; sourceTree = "<group>"; };
@@ -79,7 +72,6 @@
 		F251709CA4C8C6C578CD831E /* UIColor+Hex.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; name = "UIColor+Hex.m"; path = "Hex/UIColor+Hex.m"; sourceTree = "<group>"; };
 		F68096861F382AD0830EF469 /* Pods-Hex-Private.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; path = "Pods-Hex-Private.xcconfig"; sourceTree = "<group>"; };
 		F8FD61640B8FC68540FDD4C9 /* Pods-dummy.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; path = "Pods-dummy.m"; sourceTree = "<group>"; };
-		FAD9A41B43B801FE776EDD99 /* HYPScatterLabel.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; path = HYPScatterLabel.m; sourceTree = "<group>"; };
 		FD234FB7730A4143DCD49DD7 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS7.1.sdk/System/Library/Frameworks/Foundation.framework; sourceTree = DEVELOPER_DIR; };
 /* End PBXFileReference section */
 
@@ -117,12 +109,8 @@
 		0C4CC4D3225AE8C5C0458E76 /* Source */ = {
 			isa = PBXGroup;
 			children = (
-				CE21994F7C16C0F636FD8E32 /* HYPScatterLabel.h */,
-				FAD9A41B43B801FE776EDD99 /* HYPScatterLabel.m */,
 				ADC1E492F2A73C53CA56BA87 /* HYPScatterPlot.h */,
 				2B5F376543780F8D60C5DD36 /* HYPScatterPlot.m */,
-				404EEEACEB8122866EAA1B02 /* HYPScatterPoint.h */,
-				71310CD2E6BC4CEB0C7F3562 /* HYPScatterPoint.m */,
 			);
 			path = Source;
 			sourceTree = "<group>";
@@ -265,9 +253,7 @@
 			isa = PBXHeadersBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				DF30BCE5952DE9E25F9B1BD5 /* HYPScatterLabel.h in Headers */,
 				115A91D009D521FDF347031E /* HYPScatterPlot.h in Headers */,
-				4562A56700B22CCB19F24C7B /* HYPScatterPoint.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -359,9 +345,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				EFA6BF30625C8D4CF2AD7FE9 /* HYPScatterLabel.m in Sources */,
 				58F0E8E34B3F481D37EA35A1 /* HYPScatterPlot.m in Sources */,
-				4EBC7D14500F487C2C9A4CA5 /* HYPScatterPoint.m in Sources */,
 				DB80D3A6FB2F74CF415161E2 /* Pods-Scatter-dummy.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
