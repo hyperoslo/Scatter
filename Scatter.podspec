@@ -14,5 +14,4 @@ Pod::Spec.new do |s|
 
   s.frameworks = 'UIKit', 'Foundation'
 
-  s.dependency 'Hex'
 end
