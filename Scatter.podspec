@@ -12,7 +12,6 @@ Pod::Spec.new do |s|
 
   s.source_files = 'Source/**/*'
 
-  s.frameworks = 'UIKit', 'Foundation', 'CoreText'
-  
-  s.dependency 'Hex'
+  s.frameworks = 'UIKit', 'Foundation'
+
 end
