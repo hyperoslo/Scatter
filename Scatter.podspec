@@ -1,6 +1,6 @@
 Pod::Spec.new do |s|
   s.name             = "Scatter"
-  s.version          = "0.2.0"
+  s.version          = "0.2"
   s.homepage         = "https://github.com/hyperoslo/Scatter"
   s.license          = 'MIT'
   s.author           = { "Hyper AS" => "teknologi@hyper.no" }
