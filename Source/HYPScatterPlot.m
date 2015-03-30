@@ -430,7 +430,8 @@ static const CGFloat HYPAverageYLineDashLength[] = { 6.0f };
 
 - (void)drawRect:(CGRect)rect
 {
-    CGRect plotRect = CGRectInset(self.plotView.frame, self.pointRadius, self.pointRadius);
+    CGFloat inset = self.pointRadius + HYPScatterPlotLabelPadding;
+    CGRect plotRect = CGRectInset(self.plotView.frame, inset, inset);
 
     [self updateYAxes];
     [self updateLabels];
