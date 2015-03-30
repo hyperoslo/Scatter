@@ -16,14 +16,13 @@
                         <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                         <subviews>
-                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="VYY-E6-kas">
-                                <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
+                            <view contentMode="TopLeft" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="VYY-E6-kas">
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                             </view>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
                         <constraints>
-                            <constraint firstItem="VYY-E6-kas" firstAttribute="top" secondItem="kh9-bI-dsS" secondAttribute="top" id="EoI-0C-mVV"/>
+                            <constraint firstItem="VYY-E6-kas" firstAttribute="top" secondItem="kh9-bI-dsS" secondAttribute="top" constant="20" id="EoI-0C-mVV"/>
                             <constraint firstItem="VYY-E6-kas" firstAttribute="leading" secondItem="kh9-bI-dsS" secondAttribute="leading" id="Qnr-IA-Dgk"/>
                             <constraint firstItem="VYY-E6-kas" firstAttribute="bottom" secondItem="2fi-mo-0CV" secondAttribute="top" id="ZvC-sf-Psd"/>
                             <constraint firstAttribute="trailing" secondItem="VYY-E6-kas" secondAttribute="trailing" id="ebI-Sc-vFX"/>

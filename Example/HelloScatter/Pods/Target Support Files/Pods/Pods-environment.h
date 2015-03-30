@@ -15,6 +15,6 @@
 // Scatter
 #define COCOAPODS_POD_AVAILABLE_Scatter
 #define COCOAPODS_VERSION_MAJOR_Scatter 0
-#define COCOAPODS_VERSION_MINOR_Scatter 1
+#define COCOAPODS_VERSION_MINOR_Scatter 2
 #define COCOAPODS_VERSION_PATCH_Scatter 0
 

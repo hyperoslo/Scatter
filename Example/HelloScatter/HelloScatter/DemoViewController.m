@@ -60,9 +60,9 @@
     _scatterPlot.dataSource = self;
     _scatterPlot.backgroundColor = [UIColor colorFromHex:@"351330"];
     _scatterPlot.yAxisEndGradient = [UIColor colorFromHex:@"351330"];
-    _scatterPlot.upperThresholdYLineColor = [UIColor redColor];
+    _scatterPlot.upperThresholdYLineColor = [UIColor greenColor];
     _scatterPlot.averageYLineColor = [UIColor whiteColor];
-    _scatterPlot.lowerThresholdYLineColor = [UIColor greenColor];
+    _scatterPlot.lowerThresholdYLineColor = [UIColor redColor];
 
     return _scatterPlot;
 }
@@ -134,7 +134,7 @@
 
 - (CGFloat)upperThresholdYValueInScatterPlotView:(HYPScatterPlot *)scatterPlotView
 {
-    return 55.0f;
+    return 40.0f;
 }
 
 - (CGFloat)lowerThresholdYValueInScatterPlotView:(HYPScatterPlot *)scatterPlotView
@@ -167,7 +167,7 @@
     } else if (value > [self upperThresholdYValueInScatterPlotView:self.scatterPlot]) {
         color = self.scatterPlot.upperThresholdYLineColor;
     }
-    
+
     return color;
 }
 
@@ -175,7 +175,7 @@
 
 - (NSAttributedString *)attributedStringWithValue:(CGFloat)value color:(UIColor *)color
 {
-    NSString *text = [NSString stringWithFormat:@"%f", value];
+    NSString *text = [NSString stringWithFormat:@"%.2f", value];
     NSAttributedString *attributedText = [[NSAttributedString alloc] initWithString:text attributes:
                                           @{NSFontAttributeName: [UIFont systemFontOfSize:9],
                                             NSForegroundColorAttributeName: color}];
