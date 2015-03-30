@@ -551,6 +551,8 @@ static const CGFloat HYPAverageYLineDashLength[] = { 6.0f };
 
 - (CGFloat)translateValue:(CGFloat)value srcMin:(CGFloat)srcMin srcMax:(CGFloat)srcMax destMin:(CGFloat)destMin destMax:(CGFloat)destMax;
 {
+    if (srcMax - srcMin == 0) return 0.0f;
+
     return (value - srcMin) / (srcMax - srcMin) * destMax + destMin;
 }
 
