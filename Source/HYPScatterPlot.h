@@ -2,9 +2,6 @@
 
 @protocol HYPScatterPlotDataSource;
 
-@class HYPScatterPoint;
-@class HYPScatterLabel;
-
 @interface HYPScatterPlot : UIView
 
 @property (nonatomic, weak) id<HYPScatterPlotDataSource> dataSource;

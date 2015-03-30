@@ -1,9 +1,9 @@
 PODS:
   - Hex (1.1.1)
-  - Scatter (0.1.0):
-    - Hex
+  - Scatter (0.2)
 
 DEPENDENCIES:
+  - Hex
   - Scatter (from `../../`)
 
 EXTERNAL SOURCES:
@@ -11,7 +11,7 @@ EXTERNAL SOURCES:
     :path: ../../
 
 SPEC CHECKSUMS:
-  Hex: 26fa055654eb713e45bb9771046a2d26c0c086f6
-  Scatter: bee4c49c93620f01bcc4c4aced191c156d8a6b19
+  Hex: acf6d0dc34658d3d44047a992bfd09190c87e6e7
+  Scatter: 16fc6afe95f98d0dcddeca6b90c8ad27e91c34f9
 
-COCOAPODS: 0.36.0
+COCOAPODS: 0.36.1
