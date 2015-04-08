@@ -1,9 +1,11 @@
 @import UIKit;
 
+@protocol HYPScatterPlotDelegate;
 @protocol HYPScatterPlotDataSource;
 
 @interface HYPScatterPlot : UIView
 
+@property (nonatomic, weak) id<HYPScatterPlotDelegate> delegate;
 @property (nonatomic, weak) id<HYPScatterPlotDataSource> dataSource;
 
 @property (nonatomic) UIColor *averageYLineColor;
@@ -16,9 +18,20 @@
 @property (nonatomic) UIColor *defaultPointFillColor;
 @property (nonatomic) UIColor *selectedPointFillColor;
 @property (nonatomic) UIColor *selectedPointStrokeColor;
+@property (nonatomic) UIColor *selectedPointVerticalLineColor;
+
+@property (nonatomic) BOOL enableSelection;
 
 @property (nonatomic) CGFloat axisLineWidth;
 @property (nonatomic) CGFloat pointRadius;
+
+@end
+
+@protocol HYPScatterPlotDelegate <NSObject>
+
+- (void)scatterPlotView:(HYPScatterPlot *)scatterPlotView didSelectPointAtIndex:(NSUInteger)index withScatterPlotCoordinates:(CGPoint)coordinates;
+
+- (void)scatterPlotViewDidEndSelection:(HYPScatterPlot *)scatterPlotView;
 
 @end
 
