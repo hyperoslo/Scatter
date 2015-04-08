@@ -25,10 +25,6 @@
 
     [self.uiView addSubview:self.scatterPlot];
 
-    UIColor *fillColor1 = [UIColor colorFromHex:@"CC2A41"];
-    UIColor *fillColor2 = [UIColor colorFromHex:@"64908A"];
-    UIColor *fillColor3 = [UIColor colorFromHex:@"E6AC27"];
-
     self.scatterPoints = @[ [NSValue valueWithCGPoint:CGPointMake(0, 20)],
                             [NSValue valueWithCGPoint:CGPointMake(100, 20)],
                             [NSValue valueWithCGPoint:CGPointMake(500, 50)],
@@ -36,7 +32,7 @@
                             [NSValue valueWithCGPoint:CGPointMake(400, 0)],
                             [NSValue valueWithCGPoint:CGPointMake(300, -125)]
                             ];
-    self.scatterPointColors = @[ fillColor1, fillColor2, fillColor3, fillColor2, fillColor3, fillColor2 ];
+    
     self.minimumXValue = 0;
     self.maximumXValue = 500;
     self.minimumYValue = -125;
@@ -62,8 +58,9 @@
     _scatterPlot.yAxisEndGradient = [UIColor colorFromHex:@"351330"];
     _scatterPlot.upperThresholdYLineColor = [UIColor greenColor];
     _scatterPlot.averageYLineColor = [UIColor whiteColor];
-    _scatterPlot.lowerThresholdYLineColor = [UIColor redColor];
-
+    _scatterPlot.lowerThresholdYLineColor = [UIColor colorFromHex:@"CC2A41"];
+    _scatterPlot.selectedPointFillColor = [UIColor colorFromHex:@"E6AC27"];
+    
     return _scatterPlot;
 }
 
