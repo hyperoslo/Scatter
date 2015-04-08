@@ -34,7 +34,7 @@ static const CGFloat HYPAverageYLineDashLength[] = { 6.0f };
 
 @property (nonatomic) UIView *plotView;
 
-@property (nonatomic) UILongPressGestureRecognizer *panGestureRecognizer;
+@property (nonatomic) UILongPressGestureRecognizer *gestureRecognizer;
 @property (nonatomic) CGPoint selectedPoint;
 @property (nonatomic) CGFloat selectedX;
 
@@ -181,7 +181,7 @@ static const CGFloat HYPAverageYLineDashLength[] = { 6.0f };
     [self addConstraint:self.upperThresholdYLabelBottomMarginConstraint];
     [self addConstraint:self.lowerThresholdYLabelBottomMarginConstraint];
 
-    [self addGestureRecognizer:self.panGestureRecognizer];
+    [self addGestureRecognizer:self.gestureRecognizer];
 
     return self;
 }
@@ -437,13 +437,14 @@ static const CGFloat HYPAverageYLineDashLength[] = { 6.0f };
     return _plotView;
 }
 
-- (UILongPressGestureRecognizer *)panGestureRecognizer
+- (UILongPressGestureRecognizer *)gestureRecognizer
 {
-    if (_panGestureRecognizer) return _panGestureRecognizer;
+    if (_gestureRecognizer) return _gestureRecognizer;
 
-    _panGestureRecognizer = [[UILongPressGestureRecognizer alloc] initWithTarget:self action:@selector(moveVerticalSelection:)];
+    _gestureRecognizer = [[UILongPressGestureRecognizer alloc] initWithTarget:self
+                                                                       action:@selector(moveVerticalSelection:)];
 
-    return _panGestureRecognizer;
+    return _gestureRecognizer;
 }
 
 - (NSArray *)gradientColors
@@ -459,9 +460,14 @@ static const CGFloat HYPAverageYLineDashLength[] = { 6.0f };
     if (!self.enableSelection) return;
 
     CGFloat xValue = [gestureRecognizer locationInView:self].x;
-    BOOL validX = xValue >= CGRectGetMinX(self.plotView.frame) && xValue <= CGRectGetMaxX(self.plotView.frame);
 
-    if ((gestureRecognizer.state == UIGestureRecognizerStateBegan || gestureRecognizer.state == UIGestureRecognizerStateChanged) && validX) {
+    BOOL validX = xValue >= CGRectGetMinX(self.plotView.frame) &&
+                  xValue <= CGRectGetMaxX(self.plotView.frame);
+
+    BOOL gestureBeganOrChanged = gestureRecognizer.state == UIGestureRecognizerStateBegan ||
+                                 gestureRecognizer.state == UIGestureRecognizerStateChanged;
+
+    if (gestureBeganOrChanged && validX) {
         self.selectedX = xValue;
         [self setNeedsDisplay];
     } else if (gestureRecognizer.state == UIGestureRecognizerStateEnded) {
@@ -486,11 +492,13 @@ static const CGFloat HYPAverageYLineDashLength[] = { 6.0f };
 
 - (void)updateYAxes
 {
-    self.leftYAxisGradient.frame = CGRectMake(0.0f, 0.0f, HYPScatterPlotYAxisWidth, CGRectGetHeight(self.leftYAxis.frame));
     self.leftYAxisGradient.colors = self.gradientColors;
+    self.leftYAxisGradient.frame = CGRectMake(0.0f, 0.0f, HYPScatterPlotYAxisWidth,
+                                              CGRectGetHeight(self.leftYAxis.frame));
 
-    self.rightYAxisGradient.frame = CGRectMake(0.0f, 0.0f, HYPScatterPlotYAxisWidth, CGRectGetHeight(self.rightYAxis.frame));
     self.rightYAxisGradient.colors = self.gradientColors;
+    self.rightYAxisGradient.frame = CGRectMake(0.0f, 0.0f, HYPScatterPlotYAxisWidth,
+                                               CGRectGetHeight(self.rightYAxis.frame));
 }
 
 - (void)updateLabels
@@ -533,49 +541,84 @@ static const CGFloat HYPAverageYLineDashLength[] = { 6.0f };
 
     if ([self.dataSource respondsToSelector:@selector(upperThresholdYValueInScatterPlotView:)]) {
         CGFloat y = [self.dataSource upperThresholdYValueInScatterPlotView:self];
-        CGFloat translatedY = [self translateValue:y srcMin:srcMinY srcMax:srcMaxY destMin:destMinY destMax:destMaxY];
-        self.upperThresholdYLabelBottomMarginConstraint.constant = translatedY + CGRectGetHeight(self.upperThresholdYLabel.frame) + HYPScatterPlotLabelPadding;
+        CGFloat translatedY = [self translateValue:y
+                                     sourceMinimum:srcMinY
+                                     sourceMaximum:srcMaxY
+                                destinationMinimum:destMinY
+                                destinationMaximum:destMaxY];
+
+        CGFloat newMargin = translatedY + CGRectGetHeight(self.upperThresholdYLabel.frame) + HYPScatterPlotLabelPadding;
+        self.upperThresholdYLabelBottomMarginConstraint.constant = newMargin;
         [self drawLineWithYValue:translatedY usingColor:self.upperThresholdYLineColor dashedStyle:NO];
     }
 
     if ([self.dataSource respondsToSelector:@selector(lowerThresholdYValueInScatterPlotView:)]) {
         CGFloat y = [self.dataSource lowerThresholdYValueInScatterPlotView:self];
-        CGFloat translatedY = [self translateValue:y srcMin:srcMinY srcMax:srcMaxY destMin:destMinY destMax:destMaxY];
-        self.lowerThresholdYLabelBottomMarginConstraint.constant = translatedY + CGRectGetHeight(self.lowerThresholdYLabel.frame) + HYPScatterPlotLabelPadding;
+        CGFloat translatedY = [self translateValue:y
+                                     sourceMinimum:srcMinY
+                                     sourceMaximum:srcMaxY
+                                destinationMinimum:destMinY
+                                destinationMaximum:destMaxY];
+
+        CGFloat newMargin = translatedY + CGRectGetHeight(self.lowerThresholdYLabel.frame) + HYPScatterPlotLabelPadding;
+        self.lowerThresholdYLabelBottomMarginConstraint.constant = newMargin;
         [self drawLineWithYValue:translatedY usingColor:self.lowerThresholdYLineColor dashedStyle:NO];
     }
 
     if ([self.dataSource respondsToSelector:@selector(averageYValueInScatterPlotView:)]) {
         CGFloat y = [self.dataSource averageYValueInScatterPlotView:self];
-        CGFloat translatedY = [self translateValue:y srcMin:srcMinY srcMax:srcMaxY destMin:destMinY destMax:destMaxY];
-        self.averageYLabelBottomMarginConstraint.constant = translatedY + CGRectGetHeight(self.averageYLabel.frame) + HYPScatterPlotLabelPadding;
+        CGFloat translatedY = [self translateValue:y
+                                     sourceMinimum:srcMinY
+                                     sourceMaximum:srcMaxY
+                                destinationMinimum:destMinY
+                                destinationMaximum:destMaxY];
+
+        CGFloat newMargin = translatedY + CGRectGetHeight(self.averageYLabel.frame) + HYPScatterPlotLabelPadding;
+        self.averageYLabelBottomMarginConstraint.constant = newMargin;
         [self drawLineWithYValue:translatedY usingColor:self.averageYLineColor dashedStyle:YES];
     }
+
+    BOOL selectionActive = self.enableSelection && self.selectedX != CGFLOAT_MAX;
 
     CGPoint selectedPoint = CGPointMake(CGFLOAT_MAX, CGFLOAT_MAX);
     NSUInteger selectedIndex;
 
     for (NSInteger index = 0; index < numberOfPoints; index++) {
         CGPoint point = [self.dataSource pointAtIndex:index];
-        CGPoint translatedPoint = CGPointMake(
-                                              [self translateValue:point.x srcMin:srcMinX srcMax:srcMaxX destMin:destMinX destMax:destMaxX],
-                                              [self translateValue:point.y srcMin:srcMinY srcMax:srcMaxY destMin:destMinY destMax:destMaxY]
-                                              );
+
+        CGFloat translatedX = [self translateValue:point.x
+                                     sourceMinimum:srcMinX
+                                     sourceMaximum:srcMaxX
+                                destinationMinimum:destMinX
+                                destinationMaximum:destMaxX];
+
+        CGFloat translatedY = [self translateValue:point.y
+                                     sourceMinimum:srcMinY
+                                     sourceMaximum:srcMaxY
+                                destinationMinimum:destMinY
+                                destinationMaximum:destMaxY];
+
+        CGPoint translatedPoint = CGPointMake(translatedX, translatedY);
 
         [self drawPoint:translatedPoint isSelected:NO];
 
-        if (self.enableSelection && self.selectedX != CGFLOAT_MAX && fabsf(translatedPoint.x - self.selectedX) < fabsf(selectedPoint.x - self.selectedX)) {
+        BOOL closerThanSelected = fabsf(translatedPoint.x - self.selectedX) < fabsf(selectedPoint.x - self.selectedX);
+
+        if (selectionActive && closerThanSelected) {
             selectedPoint = translatedPoint;
             selectedIndex = index;
         }
     }
 
-    if (self.enableSelection && self.selectedX != CGFLOAT_MAX) {
+    if (selectionActive) {
         [self drawLineWithXValue:selectedPoint.x usingColor:self.selectedPointVerticalLineColor];
         [self drawPoint:selectedPoint isSelected:YES];
 
-        if (!CGPointEqualToPoint(self.selectedPoint, selectedPoint) && [self.delegate respondsToSelector:@selector(scatterPlotView:didSelectPointAtIndex:withScatterPlotCoordinates:)]) {
-            [self.delegate scatterPlotView:self didSelectPointAtIndex:selectedIndex withScatterPlotCoordinates:selectedPoint];
+        if (!CGPointEqualToPoint(self.selectedPoint, selectedPoint) &&
+            [self.delegate respondsToSelector:@selector(scatterPlotView:didSelectPointAtIndex:withScatterPlotCoordinates:)]) {
+            [self.delegate scatterPlotView:self
+                     didSelectPointAtIndex:selectedIndex
+                withScatterPlotCoordinates:selectedPoint];
         }
     }
 
@@ -633,7 +676,8 @@ static const CGFloat HYPAverageYLineDashLength[] = { 6.0f };
     CGContextStrokePath(context);
 }
 
-- (CGFloat)translateValue:(CGFloat)value srcMin:(CGFloat)srcMin srcMax:(CGFloat)srcMax destMin:(CGFloat)destMin destMax:(CGFloat)destMax;
+- (CGFloat)translateValue:(CGFloat)value sourceMinimum:(CGFloat)srcMin sourceMaximum:(CGFloat)srcMax
+       destinationMinimum:(CGFloat)destMin destinationMaximum:(CGFloat)destMax;
 {
     if (srcMax - srcMin == 0) return 0.0f;
 
