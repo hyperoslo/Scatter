@@ -462,10 +462,10 @@ static const CGFloat HYPAverageYLineDashLength[] = { 6.0f };
     CGFloat xValue = [gestureRecognizer locationInView:self].x;
 
     BOOL validX = xValue >= CGRectGetMinX(self.plotView.frame) &&
-                  xValue <= CGRectGetMaxX(self.plotView.frame);
+    xValue <= CGRectGetMaxX(self.plotView.frame);
 
     BOOL gestureBeganOrChanged = gestureRecognizer.state == UIGestureRecognizerStateBegan ||
-                                 gestureRecognizer.state == UIGestureRecognizerStateChanged;
+    gestureRecognizer.state == UIGestureRecognizerStateChanged;
 
     if (gestureBeganOrChanged && validX) {
         self.selectedX = xValue;
@@ -600,7 +600,7 @@ static const CGFloat HYPAverageYLineDashLength[] = { 6.0f };
 
         CGPoint translatedPoint = CGPointMake(translatedX, translatedY);
 
-        [self drawPoint:translatedPoint isSelected:NO];
+        [self drawPoint:translatedPoint atIndex:index isSelected:NO];
 
         BOOL closerThanSelected = fabsf(translatedPoint.x - self.selectedX) < fabsf(selectedPoint.x - self.selectedX);
 
@@ -612,7 +612,7 @@ static const CGFloat HYPAverageYLineDashLength[] = { 6.0f };
 
     if (selectionActive) {
         [self drawLineWithXValue:selectedPoint.x usingColor:self.selectedPointVerticalLineColor];
-        [self drawPoint:selectedPoint isSelected:YES];
+        [self drawPoint:selectedPoint atIndex:selectedIndex isSelected:YES];
 
         if (!CGPointEqualToPoint(self.selectedPoint, selectedPoint) &&
             [self.delegate respondsToSelector:@selector(scatterPlotView:didSelectPointAtIndex:withScatterPlotCoordinates:)]) {
@@ -625,14 +625,17 @@ static const CGFloat HYPAverageYLineDashLength[] = { 6.0f };
     self.selectedPoint = selectedPoint;
 }
 
-- (void)drawPoint:(CGPoint)point isSelected:(BOOL)selected
+- (void)drawPoint:(CGPoint)point atIndex:(NSUInteger)index isSelected:(BOOL)selected
 {
     UIColor *fillColor = self.defaultPointFillColor;
-    UIColor *strokeColor = self.defaultPointFillColor;
+    UIColor *strokeColor = fillColor;
 
     if (selected) {
         fillColor = self.selectedPointFillColor;
         strokeColor = self.selectedPointStrokeColor;
+    } else if ([self.dataSource respondsToSelector:@selector(fillColorOfPointAtIndex:)]) {
+        fillColor = [self.dataSource fillColorOfPointAtIndex:index];
+        strokeColor = fillColor;
     }
 
     CGRect pointRect = CGRectMake(point.x - self.pointRadius,
