@@ -462,10 +462,10 @@ static const CGFloat HYPAverageYLineDashLength[] = { 6.0f };
     CGFloat xValue = [gestureRecognizer locationInView:self].x;
 
     BOOL validX = xValue >= CGRectGetMinX(self.plotView.frame) &&
-                  xValue <= CGRectGetMaxX(self.plotView.frame);
+    xValue <= CGRectGetMaxX(self.plotView.frame);
 
     BOOL gestureBeganOrChanged = gestureRecognizer.state == UIGestureRecognizerStateBegan ||
-                                 gestureRecognizer.state == UIGestureRecognizerStateChanged;
+    gestureRecognizer.state == UIGestureRecognizerStateChanged;
 
     if (gestureBeganOrChanged && validX) {
         self.selectedX = xValue;
